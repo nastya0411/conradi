@@ -5,22 +5,22 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "images".
+ * This is the model class for table "image".
  *
  * @property int $id
- * @property string $image_name
+ * @property string $image
  * @property int $product_id
  *
- * @property Products $products
+ * @property Product $product
  */
-class Images extends \yii\db\ActiveRecord
+class Image extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'images';
+        return 'image';
     }
 
     /**
@@ -29,9 +29,9 @@ class Images extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['image_name', 'product_id'], 'required'],
+            [['image', 'product_id'], 'required'],
             [['product_id'], 'integer'],
-            [['image_name'], 'string', 'max' => 100],
+            [['image'], 'string', 'max' => 255],
             [['product_id'], 'unique'],
         ];
     }
@@ -43,18 +43,18 @@ class Images extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'image_name' => 'Image Name',
+            'image' => 'Image',
             'product_id' => 'Product ID',
         ];
     }
 
     /**
-     * Gets query for [[Products]].
+     * Gets query for [[Product]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getProducts()
+    public function getProduct()
     {
-        return $this->hasOne(Products::class, ['id' => 'product_id']);
+        return $this->hasOne(Product::class, ['id' => 'product_id']);
     }
 }

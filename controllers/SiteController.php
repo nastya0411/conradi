@@ -9,6 +9,9 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\RegisterForm;
+use app\models\Role;
+use yii\bootstrap5\ActiveForm;
 
 class SiteController extends Controller
 {
@@ -77,7 +80,10 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            Yii::$app->session->setFlash('success', 'Вы успешно авторизовались в системе!');
+            return Yii::$app->user->identity->isClient
+                ? $this->redirect('/account')
+                : $this->redirect('/admin');
         }
 
         $model->password = '';
@@ -94,35 +100,35 @@ class SiteController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
+        Yii::$app->session->setFlash('success', 'Вы успешно вышли из системы!');
 
         return $this->goHome();
     }
 
-    /**
-     * Displays contact page.
-     *
-     * @return Response|string
-     */
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
 
-            return $this->refresh();
+    public function actionRegister()
+     { 
+        $user = new \app\models\User();
+         if ($user->load(Yii::$app->request->post()))
+            $user->role_id = Role::getRoleId('user');
+            $user->auth_key = Yii::$app->security->generateRandomString();
+          { if ($user->validate()){
+            $user->password = Yii::$app->security->generatePasswordHash($user->password);
+            if ($user->save()) {
+                var_dump('Пользователь сохранен, ID:', $user->id);
+                Yii::$app->session->setFlash('success','Пользователь успешно зарегестрирован!');
+                return $this->redirect('/');
+            } else {
+                var_dump('Ошибки при сохранении:', $user->errors);
+            }
+        } else {
+            var_dump('Ошибки валидации:', $user->errors);
         }
-        return $this->render('contact', [
-            'model' => $model,
+        
+        die(); 
+    }
+        return $this->render('register', [
+            'model' => $user,
         ]);
-    }
-
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
-    public function actionAbout()
-    {
-        return $this->render('about');
-    }
-}
+        }
+     }

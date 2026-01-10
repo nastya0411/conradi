@@ -5,23 +5,24 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "subscribe".
+ * This is the model class for table "estimation_user".
  *
  * @property int $id
+ * @property float $estimation
  * @property int $user_id
- * @property string $email
- * @property string $description
+ * @property int $product_id
  *
+ * @property Product $product
  * @property User $user
  */
-class Subscribe extends \yii\db\ActiveRecord
+class EstimationUser extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'subscribe';
+        return 'estimation_user';
     }
 
     /**
@@ -30,10 +31,10 @@ class Subscribe extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'user_id', 'email', 'description'], 'required'],
-            [['id', 'user_id'], 'integer'],
-            [['description'], 'string'],
-            [['email'], 'string', 'max' => 255],
+            [['id', 'user_id', 'product_id'], 'required'],
+            [['id', 'user_id', 'product_id'], 'integer'],
+            [['estimation'], 'number'],
+            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::class, 'targetAttribute' => ['product_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -45,10 +46,20 @@ class Subscribe extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'estimation' => 'Estimation',
             'user_id' => 'User ID',
-            'email' => 'Email',
-            'description' => 'Description',
+            'product_id' => 'Product ID',
         ];
+    }
+
+    /**
+     * Gets query for [[Product]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProduct()
+    {
+        return $this->hasOne(Product::class, ['id' => 'product_id']);
     }
 
     /**

@@ -5,21 +5,21 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "status_orders".
+ * This is the model class for table "status".
  *
  * @property int $id
- * @property string $status_title
+ * @property string $title
  *
  * @property Order[] $orders
  */
-class StatusOrders extends \yii\db\ActiveRecord
+class Status extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'status_orders';
+        return 'status';
     }
 
     /**
@@ -28,9 +28,9 @@ class StatusOrders extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'status_title'], 'required'],
+            [['id', 'title'], 'required'],
             [['id'], 'integer'],
-            [['status_title'], 'string', 'max' => 255],
+            [['title'], 'string', 'max' => 255],
             [['id'], 'unique'],
         ];
     }
@@ -42,7 +42,7 @@ class StatusOrders extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'status_title' => 'Status Title',
+            'title' => 'Title',
         ];
     }
 

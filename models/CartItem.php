@@ -5,26 +5,26 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "order_item".
+ * This is the model class for table "cart_item".
  *
  * @property int $id
- * @property int $order_id
+ * @property int $cart_id
  * @property int $product_id
- * @property int $amount
  * @property float $cost
+ * @property int $amount
  * @property float $total
  *
- * @property Order $order
+ * @property Cart $cart
  * @property Product $product
  */
-class OrderItem extends \yii\db\ActiveRecord
+class CartItem extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'order_item';
+        return 'cart_item';
     }
 
     /**
@@ -33,11 +33,11 @@ class OrderItem extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['order_id', 'product_id', 'amount', 'cost'], 'required'],
-            [['order_id', 'product_id', 'amount'], 'integer'],
+            [['cart_id', 'product_id', 'cost', 'amount'], 'required'],
+            [['cart_id', 'product_id', 'amount'], 'integer'],
             [['cost', 'total'], 'number'],
-            [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Order::class, 'targetAttribute' => ['order_id' => 'id']],
             [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::class, 'targetAttribute' => ['product_id' => 'id']],
+            [['cart_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cart::class, 'targetAttribute' => ['cart_id' => 'id']],
         ];
     }
 
@@ -48,22 +48,22 @@ class OrderItem extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'order_id' => 'Order ID',
+            'cart_id' => 'Cart ID',
             'product_id' => 'Product ID',
-            'amount' => 'Amount',
             'cost' => 'Cost',
+            'amount' => 'Amount',
             'total' => 'Total',
         ];
     }
 
     /**
-     * Gets query for [[Order]].
+     * Gets query for [[Cart]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getOrder()
+    public function getCart()
     {
-        return $this->hasOne(Order::class, ['id' => 'order_id']);
+        return $this->hasOne(Cart::class, ['id' => 'cart_id']);
     }
 
     /**

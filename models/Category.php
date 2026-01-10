@@ -5,21 +5,21 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "genders".
+ * This is the model class for table "category".
  *
  * @property int $id
- * @property string $gender_title
+ * @property string $title
  *
- * @property Users[] $users
+ * @property Product[] $products
  */
-class Genders extends \yii\db\ActiveRecord
+class Category extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'genders';
+        return 'category';
     }
 
     /**
@@ -28,8 +28,8 @@ class Genders extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['gender_title'], 'required'],
-            [['gender_title'], 'string', 'max' => 100],
+            [['title'], 'required'],
+            [['title'], 'string', 'max' => 255],
         ];
     }
 
@@ -40,17 +40,17 @@ class Genders extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'gender_title' => 'Gender Title',
+            'title' => 'Title',
         ];
     }
 
     /**
-     * Gets query for [[Users]].
+     * Gets query for [[Products]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUsers()
+    public function getProducts()
     {
-        return $this->hasMany(Users::class, ['gender_id' => 'id']);
+        return $this->hasMany(Product::class, ['category_id' => 'id']);
     }
 }

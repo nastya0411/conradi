@@ -5,23 +5,24 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "subscribe".
+ * This is the model class for table "cart".
  *
  * @property int $id
+ * @property float $cost
+ * @property int $amount
  * @property int $user_id
- * @property string $email
- * @property string $description
  *
+ * @property CartItem[] $cartItems
  * @property User $user
  */
-class Subscribe extends \yii\db\ActiveRecord
+class Cart extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'subscribe';
+        return 'cart';
     }
 
     /**
@@ -30,10 +31,9 @@ class Subscribe extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'user_id', 'email', 'description'], 'required'],
-            [['id', 'user_id'], 'integer'],
-            [['description'], 'string'],
-            [['email'], 'string', 'max' => 255],
+            [['cost', 'amount', 'user_id'], 'required'],
+            [['cost'], 'number'],
+            [['amount', 'user_id'], 'integer'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -45,10 +45,20 @@ class Subscribe extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'cost' => 'Cost',
+            'amount' => 'Amount',
             'user_id' => 'User ID',
-            'email' => 'Email',
-            'description' => 'Description',
         ];
+    }
+
+    /**
+     * Gets query for [[CartItems]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCartItems()
+    {
+        return $this->hasMany(CartItem::class, ['cart_id' => 'id']);
     }
 
     /**

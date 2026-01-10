@@ -5,21 +5,21 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "type_product".
+ * This is the model class for table "product_type".
  *
  * @property int $id
- * @property string $type_title
+ * @property string $title
  *
- * @property Products[] $products
+ * @property Product[] $products
  */
-class TypeProduct extends \yii\db\ActiveRecord
+class ProductType extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'type_product';
+        return 'product_type';
     }
 
     /**
@@ -28,9 +28,9 @@ class TypeProduct extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'type_title'], 'required'],
+            [['id', 'title'], 'required'],
             [['id'], 'integer'],
-            [['type_title'], 'string', 'max' => 255],
+            [['title'], 'string', 'max' => 255],
             [['id'], 'unique'],
         ];
     }
@@ -42,7 +42,7 @@ class TypeProduct extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'type_title' => 'Type Title',
+            'title' => 'Title',
         ];
     }
 
@@ -53,6 +53,6 @@ class TypeProduct extends \yii\db\ActiveRecord
      */
     public function getProducts()
     {
-        return $this->hasMany(Products::class, ['type_product_id' => 'id']);
+        return $this->hasMany(Product::class, ['product_type_id' => 'id']);
     }
 }

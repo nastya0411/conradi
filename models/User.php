@@ -2,103 +2,118 @@
 
 namespace app\models;
 
-class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
+use Yii;
+use yii\rbac\Role;
+
+/**
+ * This is the model class for table "user".
+ *
+ * @property int $id
+ * @property string $full_name
+ * @property string $login
+ * @property string $password
+ * @property string $phone
+ * @property string $birthday
+ * @property int $role_id
+ * @property string $auth_key
+ *
+ * @property Cart[] $carts
+ * @property EstimationUser[] $estimationUsers
+ * @property Order[] $orders
+ * @property Role $role
+ * @property Subscribe[] $subscribes
+ */
+class User extends \yii\db\ActiveRecord
 {
-    public $id;
-    public $username;
-    public $password;
-    public $authKey;
-    public $accessToken;
-
-    private static $users = [
-        '100' => [
-            'id' => '100',
-            'username' => 'admin',
-            'password' => 'admin',
-            'authKey' => 'test100key',
-            'accessToken' => '100-token',
-        ],
-        '101' => [
-            'id' => '101',
-            'username' => 'demo',
-            'password' => 'demo',
-            'authKey' => 'test101key',
-            'accessToken' => '101-token',
-        ],
-    ];
-
-
     /**
      * {@inheritdoc}
      */
-    public static function findIdentity($id)
+    public static function tableName()
     {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+        return 'user';
     }
 
     /**
      * {@inheritdoc}
      */
-    public static function findIdentityByAccessToken($token, $type = null)
+    public function rules()
     {
-        foreach (self::$users as $user) {
-            if ($user['accessToken'] === $token) {
-                return new static($user);
-            }
-        }
-
-        return null;
+        return [
+            [['full_name', 'login', 'password', 'phone', 'birthday', 'auth_key'], 'required'],
+            [['birthday'], 'safe'],
+            [['role_id'], 'integer'],
+            [['full_name', 'login', 'auth_key'], 'string', 'max' => 255],
+            [['password', 'phone'], 'string', 'max' => 100],
+            [['login'], 'unique'],
+            [['phone'], 'unique'],
+            [['role_id'], 'exist', 'skipOnError' => true, 'targetClass' => \app\models\Role::class, 'targetAttribute' => ['role_id' => 'id']],
+        ];
     }
 
     /**
-     * Finds user by username
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'full_name' => 'Full Name',
+            'login' => 'Login',
+            'password' => 'Password',
+            'phone' => 'Phone',
+            'birthday' => 'Birthday',
+            'role_id' => 'Role ID',
+            'auth_key' => 'Auth Key',
+        ];
+    }
+
+    /**
+     * Gets query for [[Carts]].
      *
-     * @param string $username
-     * @return static|null
+     * @return \yii\db\ActiveQuery
      */
-    public static function findByUsername($username)
+    public function getCarts()
     {
-        foreach (self::$users as $user) {
-            if (strcasecmp($user['username'], $username) === 0) {
-                return new static($user);
-            }
-        }
-
-        return null;
+        return $this->hasMany(Cart::class, ['user_id' => 'id']);
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getAuthKey()
-    {
-        return $this->authKey;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function validateAuthKey($authKey)
-    {
-        return $this->authKey === $authKey;
-    }
-
-    /**
-     * Validates password
+     * Gets query for [[EstimationUsers]].
      *
-     * @param string $password password to validate
-     * @return bool if password provided is valid for current user
+     * @return \yii\db\ActiveQuery
      */
-    public function validatePassword($password)
+    public function getEstimationUsers()
     {
-        return $this->password === $password;
+        return $this->hasMany(EstimationUser::class, ['user_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Orders]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOrders()
+    {
+        return $this->hasMany(Order::class, ['user_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Role]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRole()
+    {
+        return $this->hasOne(Role::class, ['id' => 'role_id']);
+    }
+
+    /**
+     * Gets query for [[Subscribes]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSubscribes()
+    {
+        return $this->hasMany(Subscribe::class, ['user_id' => 'id']);
     }
 }
