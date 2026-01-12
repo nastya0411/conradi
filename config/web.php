@@ -9,6 +9,7 @@ $config = [
     'bootstrap' => ['log'],
     'language' => 'ru-RU',
     'name' => 'Конради',
+    'defaultRoute' => "/shop/catalog", 
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
@@ -54,6 +55,23 @@ $config = [
         ],
     ],
     'params' => $params,
+
+    'modules' => [ 
+        'shop' => [ 
+            'class' => 'app\modules\shop\Module',
+            'defaultRoute' => "catalog" 
+        ],
+        
+        'account' => [ 
+            'class' => 'app\modules\account\Module', 
+        ],
+        
+        'admin' => [ 
+            'class' => 'app\modules\admin\Module', 
+        ],
+
+
+    ],
 ];
 
 if (YII_ENV_DEV) {

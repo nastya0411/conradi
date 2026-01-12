@@ -52,12 +52,10 @@ class Role extends \yii\db\ActiveRecord
     public function getUsers()
     {
         return $this->hasMany(User::class, ['role_id' => 'id']);
-    }
+    } 
 
-     public static function getRoleId(string $title): int  
-		   { 
-		       return self::findOne(['title' => $title]) -> id; 
-		   } 
-		 
-		
+    public static function getRoleId(string $title): int 
+    {
+        return self::findOne(['title' => $title]) -> id;
+    }
 }

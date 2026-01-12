@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php ActiveForm::end(); ?>
         </div>
         <div>
-            Пользователи: q/q admin/admin
+            Пользователи: User12/Password12 Admin12/Adminka12
         </div>
     </div>
 </div>
