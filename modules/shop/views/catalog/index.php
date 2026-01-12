@@ -10,7 +10,7 @@ use yii\widgets\Pjax;
 /** @var app\modules\shop\models\CatalogSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Products';
+$this->title = 'Каталог';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="product-index">

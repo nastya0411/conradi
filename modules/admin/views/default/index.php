@@ -1,12 +1,14 @@
-<div class="admin-default-index">
-    <h1><?= $this->context->action->uniqueId ?></h1>
-    <p>
-        This is the view content for action "<?= $this->context->action->id ?>".
-        The action belongs to the controller "<?= get_class($this->context) ?>"
-        in the "<?= $this->context->module->id ?>" module.
-    </p>
-    <p>
-        You may customize this page by editing the following file:<br>
-        <code><?= __FILE__ ?></code>
-    </p>
-</div>
+<?php
+
+/** @var yii\web\View $this */
+
+use yii\bootstrap5\Html;
+
+?>
+<h3>Панель управления интернет-магазином</h3>
+<p>
+    <?= Html::a('Продукт', ['/admin/product'], ['class' => 'btn btn-outline-success']) ?>
+    <?= Html::a('Категории', ['/admin/category/index'], ['class' => 'btn btn-outline-success']) ?>
+    <?= Html::a('Тип товаров', ['/admin/product_type'], ['class' => 'btn btn-outline-success']) ?>
+
+</p>

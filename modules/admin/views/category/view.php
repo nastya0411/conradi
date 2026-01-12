@@ -7,20 +7,23 @@ use yii\widgets\DetailView;
 /** @var app\models\Category $model */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Categories', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Категории', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
+    <p>
+    <?= Html::a('Назад', ['/admin/category'], ['class' => 'btn btn-outline-info']) ?>
+    </p>
 <div class="category-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
+        <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-outline-warning']) ?>
+        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
+            'class' => 'btn btn-outline-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Вы уверены, что хотите удалить категорию?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -28,10 +31,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= DetailView::widget([
         'model' => $model,
+            'options' => [
+        'class' => 'table table-bordered',
+        'style' => 'background-color: white; color: black;'
+    ],
         'attributes' => [
             'id',
             'title',
         ],
     ]) ?>
+    
 
 </div>

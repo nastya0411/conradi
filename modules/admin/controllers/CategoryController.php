@@ -9,9 +9,9 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * CategorytController implements the CRUD actions for Category model.
+ * CategoryController implements the CRUD actions for Category model.
  */
-class CategorytController extends Controller
+class CategoryController extends Controller
 {
     /**
      * @inheritDoc
