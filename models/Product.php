@@ -25,6 +25,9 @@ use Yii;
  */
 class Product extends \yii\db\ActiveRecord
 {
+
+    public $imageFile;
+
     /**
      * {@inheritdoc}
      */
@@ -48,6 +51,8 @@ class Product extends \yii\db\ActiveRecord
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::class, 'targetAttribute' => ['category_id' => 'id']],
             [['id'], 'exist', 'skipOnError' => true, 'targetClass' => Image::class, 'targetAttribute' => ['id' => 'product_id']],
             [['product_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductType::class, 'targetAttribute' => ['product_type_id' => 'id']],
+            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
+
         ];
     }
 
@@ -58,13 +63,15 @@ class Product extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'category_id' => 'Category ID',
-            'title' => 'Title',
+            'category_id' => 'Категория',
+            'title' => 'Название продукта',
             'stars' => 'Stars',
-            'price' => 'Price',
-            'desciption' => 'Desciption',
-            'count' => 'Count',
-            'product_type_id' => 'Product Type ID',
+            'price' => 'Цена',
+            'desciption' => 'Описание',
+            'count' => 'Количество на складе',
+            'product_type_id' => 'Тип продукта',
+            'imageFile' => 'Изображение продукта',
+
         ];
     }
 
@@ -126,5 +133,21 @@ class Product extends \yii\db\ActiveRecord
     public function getProductType()
     {
         return $this->hasOne(ProductType::class, ['id' => 'product_type_id']);
+    }
+
+    public function upload()
+    {
+        if ($this->imageFile && $this->validate(['imageFile'])) {
+            $fileName = time() . '_' . Yii::$app->security->generateRandomString(8) . '.' . $this->imageFile->extension;
+            $filePath = 'img/' . $fileName;
+            
+            if ($this->imageFile->saveAs($filePath)) {
+                $image = new Image();
+                $image->product_id = $this->id;
+                $image->image = $fileName;
+                return $image->save();
+            }
+        }
+        return false;
     }
 }

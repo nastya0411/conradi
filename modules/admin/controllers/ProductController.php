@@ -2,11 +2,13 @@
 
 namespace app\modules\admin\controllers;
 
-use app\models\Product;
-use app\modules\admin\models\Product as ProductSearch;
+use app\models\Image;
+use app\models\Product; // это модель Product
+use app\modules\admin\models\ProductSearch; // а это ProductSearch!
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * ProductController implements the CRUD actions for Product model.
@@ -38,7 +40,7 @@ class ProductController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new ProductSearch();
+        $searchModel = new ProductSearch(); // Использует ProductSearch
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -70,8 +72,14 @@ class ProductController extends Controller
         $model = new Product();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post())) {
+                $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+                if ($model->save()) {
+                    if ($model->imageFile && $model->upload()) {
+                    }
+
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
             }
         } else {
             $model->loadDefaultValues();

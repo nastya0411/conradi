@@ -56,4 +56,12 @@ class ProductType extends \yii\db\ActiveRecord
         return $this->hasMany(Product::class, ['product_type_id' => 'id']);
     }
 
+
+    public static function getProductTypes()
+    {
+        return self::find()
+            ->select('title')
+            ->indexBy('id')
+            ->column();
+    }
 }
