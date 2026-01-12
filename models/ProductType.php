@@ -14,6 +14,8 @@ use Yii;
  */
 class ProductType extends \yii\db\ActiveRecord
 {
+
+
     /**
      * {@inheritdoc}
      */
@@ -28,10 +30,8 @@ class ProductType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'title'], 'required'],
-            [['id'], 'integer'],
+            [['title'], 'required'],
             [['title'], 'string', 'max' => 255],
-            [['id'], 'unique'],
         ];
     }
 
@@ -42,7 +42,7 @@ class ProductType extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
+            'title' => 'Название',
         ];
     }
 
@@ -55,4 +55,5 @@ class ProductType extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Product::class, ['product_type_id' => 'id']);
     }
+
 }
