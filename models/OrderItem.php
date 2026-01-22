@@ -19,6 +19,8 @@ use Yii;
  */
 class OrderItem extends \yii\db\ActiveRecord
 {
+
+
     /**
      * {@inheritdoc}
      */
@@ -33,6 +35,7 @@ class OrderItem extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['total'], 'default', 'value' => 0.00],
             [['order_id', 'product_id', 'amount', 'cost'], 'required'],
             [['order_id', 'product_id', 'amount'], 'integer'],
             [['cost', 'total'], 'number'],
@@ -75,4 +78,5 @@ class OrderItem extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Product::class, ['id' => 'product_id']);
     }
+
 }

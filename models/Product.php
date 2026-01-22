@@ -20,6 +20,7 @@ use Yii;
  * @property Category $category
  * @property EstimationUser[] $estimationUsers
  * @property Image $id0
+ * * @property Image $image 
  * @property OrderItem[] $orderItems
  * @property ProductType $productType
  */
@@ -27,6 +28,7 @@ class Product extends \yii\db\ActiveRecord
 {
 
     public $imageFile;
+    public $imageProduct;
 
     /**
      * {@inheritdoc}
@@ -42,14 +44,14 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'category_id', 'title', 'desciption', 'count', 'product_type_id'], 'required'],
-            [['id', 'category_id', 'count', 'product_type_id'], 'integer'],
+            [['stars'], 'default', 'value' => 0.0],
+            [['price'], 'default', 'value' => 0],
+            [['category_id', 'title', 'desciption', 'count', 'product_type_id'], 'required'],
+            [['category_id', 'count', 'product_type_id'], 'integer'],
             [['stars', 'price'], 'number'],
             [['desciption'], 'string'],
             [['title'], 'string', 'max' => 255],
-            [['id'], 'unique'],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::class, 'targetAttribute' => ['category_id' => 'id']],
-            [['id'], 'exist', 'skipOnError' => true, 'targetClass' => Image::class, 'targetAttribute' => ['id' => 'product_id']],
             [['product_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductType::class, 'targetAttribute' => ['product_type_id' => 'id']],
             [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
 
@@ -125,6 +127,8 @@ class Product extends \yii\db\ActiveRecord
         return $this->hasMany(OrderItem::class, ['product_id' => 'id']);
     }
 
+
+    
     /**
      * Gets query for [[ProductType]].
      *
@@ -134,20 +138,17 @@ class Product extends \yii\db\ActiveRecord
     {
         return $this->hasOne(ProductType::class, ['id' => 'product_type_id']);
     }
-
     public function upload()
     {
-        if ($this->imageFile && $this->validate(['imageFile'])) {
-            $fileName = time() . '_' . Yii::$app->security->generateRandomString(8) . '.' . $this->imageFile->extension;
-            $filePath = 'img/' . $fileName;
-            
-            if ($this->imageFile->saveAs($filePath)) {
-                $image = new Image();
-                $image->product_id = $this->id;
-                $image->image = $fileName;
-                return $image->save();
+        if ($this->validate()) {
+            if ($this->imageFile) {
+
+                $this->imageProduct = time() . '_' . Yii::$app->security->generateRandomString() . '.' . $this->imageFile->extension;
+                $this->imageFile->saveAs('img/' . $this->imageProduct);
             }
+            return true;
+        } else {
+            return false;
         }
-        return false;
     }
 }

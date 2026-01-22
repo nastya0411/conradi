@@ -19,6 +19,8 @@ use Yii;
  */
 class CartItem extends \yii\db\ActiveRecord
 {
+
+
     /**
      * {@inheritdoc}
      */
@@ -33,11 +35,12 @@ class CartItem extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['total'], 'default', 'value' => 0.00],
             [['cart_id', 'product_id', 'cost', 'amount'], 'required'],
             [['cart_id', 'product_id', 'amount'], 'integer'],
             [['cost', 'total'], 'number'],
-            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::class, 'targetAttribute' => ['product_id' => 'id']],
             [['cart_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cart::class, 'targetAttribute' => ['cart_id' => 'id']],
+            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::class, 'targetAttribute' => ['product_id' => 'id']],
         ];
     }
 
@@ -75,4 +78,5 @@ class CartItem extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Product::class, ['id' => 'product_id']);
     }
+
 }

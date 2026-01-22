@@ -74,23 +74,18 @@ class ProductController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-                if ($model->save()) {
-                    if ($model->imageFile && $model->upload()) {
-                    }
+                if ($model->upload() && $model->save(false)) {
 
-                    return $this->redirect(['view', 'id' => $model->id]);
-                }
-            }
-        } else {
-            $model->loadDefaultValues();
-        }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-    }
 
-    /**
+
+
+
+
+
+
+
+  /**
      * Updates an existing Product model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID

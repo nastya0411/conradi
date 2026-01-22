@@ -15,6 +15,8 @@ use Yii;
  */
 class Image extends \yii\db\ActiveRecord
 {
+
+
     /**
      * {@inheritdoc}
      */
@@ -32,7 +34,7 @@ class Image extends \yii\db\ActiveRecord
             [['image', 'product_id'], 'required'],
             [['product_id'], 'integer'],
             [['image'], 'string', 'max' => 255],
-            [['product_id'], 'unique'],
+            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::class, 'targetAttribute' => ['product_id' => 'id']],
         ];
     }
 
@@ -60,9 +62,12 @@ class Image extends \yii\db\ActiveRecord
 
         public static function setProductImage($model)
     {
-        $photo = new Image();
-        $photo->product_id = $model->id;
-        $photo->photo = $model->photoProduct;
-        return $photo->save();
+        $image = new Image();
+        $image->product_id = $model->id;
+        $image->photo = $model->photoProduct;
+        if (!$image->save()) {
+            
+        }
     }
+
 }

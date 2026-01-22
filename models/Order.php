@@ -25,6 +25,8 @@ use Yii;
  */
 class Order extends \yii\db\ActiveRecord
 {
+
+
     /**
      * {@inheritdoc}
      */
@@ -39,6 +41,7 @@ class Order extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['total'], 'default', 'value' => 0.00],
             [['user_id', 'amount', 'pay_type_id', 'address', 'status_id', 'date_time', 'created_at', 'pay_receipt'], 'required'],
             [['user_id', 'amount', 'pay_type_id', 'status_id', 'pay_receipt'], 'integer'],
             [['date_time', 'created_at'], 'safe'],
@@ -108,4 +111,5 @@ class Order extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
+
 }
