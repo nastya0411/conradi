@@ -27,6 +27,9 @@ use Yii;
 class Product extends \yii\db\ActiveRecord
 {
 
+    const PRODUCT_CREATE = 'create';
+    const PRODUCT_UPDATE = 'update';
+
     public $imageFile;
     public $imageProduct;
 
@@ -53,7 +56,9 @@ class Product extends \yii\db\ActiveRecord
             [['title'], 'string', 'max' => 255],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::class, 'targetAttribute' => ['category_id' => 'id']],
             [['product_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductType::class, 'targetAttribute' => ['product_type_id' => 'id']],
-            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
+            [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg', 'on' => self::PRODUCT_CREATE],
+            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg', 'on' => self::PRODUCT_UPDATE],
+            
 
         ];
     }

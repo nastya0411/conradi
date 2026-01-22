@@ -60,14 +60,18 @@ class Image extends \yii\db\ActiveRecord
         return $this->hasOne(Product::class, ['id' => 'product_id']);
     }
 
-        public static function setProductImage($model)
+    public static function setProductImage($model)
     {
+        if ($model_ = self::findOne(['product_id' => $model->id])) {
+            $model_->delete();
+        }
+
         $image = new Image();
         $image->product_id = $model->id;
-        $image->photo = $model->photoProduct;
+        $image->image = $model->imageProduct;
         if (!$image->save()) {
-            
+            var_dump($image->errors); die;
         }
+        return true;
     }
-
 }

@@ -70,20 +70,27 @@ class ProductController extends Controller
     public function actionCreate()
     {
         $model = new Product();
+        $model->scenario = Product::PRODUCT_CREATE;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
                 if ($model->upload() && $model->save(false)) {
+                        Image::setProductImage($model);
+                        return $this->redirect(['view', 'id' => $model->id]); 
+                    }
+                } else {
+                    var_dump($model->errors); die;
+                }
+            
+        } else {
+            $model->loadDefaultValues();
+        }
 
-
-
-
-
-
-
-
-
+        return $this->render('create', [
+            'model' => $model,           
+        ]);
+    }
 
   /**
      * Updates an existing Product model.
@@ -95,13 +102,33 @@ class ProductController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->scenario = Product::PRODUCT_UPDATE;
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                
+                $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+                $load = false;
+                if ($model->imageFile) {
+                    $model->upload();
+                    $load = true;
+                }
+                if ( $model->save(false)) {
+                       if ($load) {
+                           Image::setProductImage($model);
+                        }
+                        return $this->redirect(['view', 'id' => $model->id]); 
+                    }
+                } else {
+                    var_dump($model->errors); die;
+                }
+            
+        } else {
+            $model->loadDefaultValues();
         }
 
-        return $this->render('update', [
-            'model' => $model,
+        return $this->render('create', [
+            'model' => $model,           
         ]);
     }
 
