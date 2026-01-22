@@ -2,6 +2,7 @@
 
 namespace app\modules\shop\controllers;
 
+use app\models\Category;
 use app\models\Product;
 use app\modules\shop\models\CatalogSearch;
 use yii\web\Controller;
@@ -44,9 +45,9 @@ class CatalogController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'categories' => Category::getCategories()
         ]);
     }
-
     /**
      * Displays a single Product model.
      * @param int $id ID

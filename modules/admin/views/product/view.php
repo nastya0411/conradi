@@ -34,7 +34,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="row">
         <div class="col-md-6 mb-4">
-            <!-- Фотографии товара -->
             <div class="card">
                 <div class="card-body">
                     <?php if ($model->id0): ?>

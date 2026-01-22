@@ -133,6 +133,18 @@ class Product extends \yii\db\ActiveRecord
     }
 
 
+        public function getAverageRating()
+    {
+        return self::getRatingProduct($this->id);
+    }
+
+    public static function getRatingProduct($id)
+    {
+        return EstimationUser::find()
+            ->where(['product_id' => $id])
+            ->average('estimation') ?: 0;
+    }
+
     
     /**
      * Gets query for [[ProductType]].
