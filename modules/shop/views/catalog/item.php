@@ -34,7 +34,6 @@ use yii\helpers\Url;
                 ]) ?>
             </h5>
 
-            <!-- Категория и тип продукта через запятую -->
             <div class="text-center text-muted small mb-1">
                 <?php if ($model->category && $model->productType): ?>
                     <?= Html::encode($model->category->title) ?>, <?= Html::encode($model->productType->title) ?>
@@ -47,12 +46,10 @@ use yii\helpers\Url;
                 <?php endif; ?>
             </div>
 
-            <!-- Цена по центру -->
             <div class="h4 text-primary text-center ">
                 <?= number_format($model->price, 0, '', ' ') ?> ₽
             </div>
 
-            <!-- Количество штук по центру -->
             <div class="text-center mb-3">
                 <span class="badge bg-secondary">
                     <?= Html::encode($model->count) ?> шт.
@@ -80,7 +77,6 @@ use yii\helpers\Url;
             </div>
         <?php endif; ?>
 
-            <!-- Кнопки поуже и по центру -->
             <div class="mt-auto">
                 <div class="row g-2 justify-content-center">
                     <div class="col-8">
