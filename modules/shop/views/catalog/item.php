@@ -82,12 +82,12 @@ use yii\helpers\Url;
                     <div class="col-8">
                         <?php if (Yii::$app->user->isGuest): ?>
                             <?= Html::a('В корзину', ['/site/login'], [
-                                'class' => 'btn btn-outline-primary btn-sm w-100',
+                                'class' => 'btn btn-outline-primary btn-sm w-100',                                
                             ]) ?>
                         <?php elseif (!Yii::$app->user->identity->isAdmin): ?>
                             <?= Html::a('В корзину', ['/shop/cart/add', 'id' => $model->id], [
-                                'class' => 'btn btn-outline-primary btn-sm w-100',
-                                'data-method' => 'post'
+                                'class' => 'btn btn-outline-primary btn-sm w-100 btn-add-cart',
+                                'data-method' => 'post', 'data-pjax' => 0,
                             ]) ?>
                         <?php endif; ?>
                     </div>
@@ -97,7 +97,8 @@ use yii\helpers\Url;
                             <div class="row g-1">
                                 <div class="col-6">
                                     <?= Html::a('Просмотр', ['view', 'id' => $model->id], [
-                                        'class' => 'btn btn-outline-info btn-sm w-100'
+                                        'class' => 'btn btn-outline-info btn-sm w-100',
+                                        'data-pjax' => 0,
                                     ]) ?>
                                 </div>
                                 <div class="col-6">

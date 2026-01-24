@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 
-<div class="product-view container mt-4">
+<div class="product-view container mt-4" id="view-product">
     <p>
         <?= Html::a('Назад', ['/shop'], ['class' => 'btn btn-outline-info']) ?>
     </p>
@@ -90,7 +90,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?php if (!Yii::$app->user->isGuest && !Yii::$app->user->identity->isAdmin): ?>
                         <div class="d-grid gap-2 mb-4">
                             <?= Html::a('В корзину', ['/shop/cart/add', 'id' => $model->id], [
-                                'class' => 'btn btn-primary btn-lg',
+                                'class' => 'btn btn-primary btn-lg btn-add-cart',
                                 'data-method' => 'post'
                             ]) ?>
                         </div>

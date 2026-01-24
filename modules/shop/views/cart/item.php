@@ -59,6 +59,7 @@ $itemTotal = $pricePerItem * $model['item_amount'];
                 <?= Html::a('-', ['item-del', 'id' => $model['product_id']], [
                     'class' => 'btn btn-outline-secondary btn-sm btn-item-del',
                     'data-method' => 'post',
+                    'data-pjax' => 0,
                     'title' => 'Уменьшить',
                     'style' => 'width: 36px;'
                 ]) ?>
@@ -72,6 +73,7 @@ $itemTotal = $pricePerItem * $model['item_amount'];
                 <?= Html::a('+', ['item-add', 'id' => $model['item_id']], [
                     'class' => 'btn btn-outline-success btn-sm btn-item-add',
                     'data-method' => 'post',
+                    'data-pjax' => 0,
                     'title' => 'Увеличить',
                     'style' => 'width: 36px;'
                 ]) ?>

@@ -23,39 +23,40 @@ $this->params['breadcrumbs'][] = $this->title;
     <h3><?= Html::encode($this->title) ?></h3>
     <?php Pjax::begin([
         'id' => 'catalog-pjax',
+        'enablePushState' => false,
         'timeout' => 5000,
     ]); ?>
 
-    <div>
-        <?php $form = ActiveForm::begin([
-            'action' => ['index'],
-            'method' => 'get',
-            'options' => [
-                'data-pjax' => 1
-            ],
-        ]); ?>
+        <div>
+            <?php $form = ActiveForm::begin([
+                'action' => ['index'],
+                'method' => 'get',
+                'options' => [
+                    'data-pjax' => 1
+                ],
+            ]); ?>
 
-        <?= $form->field($searchModel, 'title')->textInput() ?>
+            <?= $form->field($searchModel, 'title')->textInput() ?>
 
-        <?= $form->field($searchModel, 'category_id')->dropDownList($categories, ['prompt' => "Выберете категорию"]) ?>
+            <?= $form->field($searchModel, 'category_id')->dropDownList($categories, ['prompt' => "Выберете категорию"]) ?>
 
-        <div class="form-group">
-            <?= Html::submitButton('Поиск', ['class' => 'btn btn-outline-primary']) ?>
-            <?= Html::a('Сброс', ['index'], ['class' => 'btn btn-outline-info']) ?>
+            <div class="form-group">
+                <?= Html::submitButton('Поиск', ['class' => 'btn btn-outline-primary']) ?>
+                <?= Html::a('Сброс', ['index'], ['class' => 'btn btn-outline-info']) ?>
+            </div>
+
+            <?php ActiveForm::end(); ?>
         </div>
-
-        <?php ActiveForm::end(); ?>
-    </div>
     
-    <?= ListView::widget([
-        'dataProvider' => $dataProvider,
-        'itemOptions' => ['class' => 'col-sm-6 col-md-4 col-lg-3 mb-4'],
-        'layout' => '<div class="row">{items}</div>{pager}',
-        'itemView' => 'item',
-        'pager' => [
-            'class' => LinkPager::class
-        ],
-    ]) ?>
+        <?= ListView::widget([
+            'dataProvider' => $dataProvider,
+            'itemOptions' => ['class' => 'col-sm-6 col-md-4 col-lg-3 mb-4'],
+            'layout' => '<div class="row">{items}</div>{pager}',
+            'itemView' => 'item',
+            'pager' => [
+                'class' => LinkPager::class
+            ],
+        ]) ?>
 
-<?php Pjax::end(); ?>
+    <?php Pjax::end(); ?>
 </div>

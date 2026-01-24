@@ -42,18 +42,14 @@ $(() => {
       },
     });
 
-  $(document).on(
-    "click",
-    "#catalog-pjax .btn-add-cart, .btn-add-cart",
-    function (e) {
-      e.preventDefault();
+  $("#catalog-pjax, #view-product").on("click", " .btn-add-cart",  function (e) {    
       productAdd($(this));
+      return false;
     }
   );
 
   $("#catalog-pjax").on("click", ".product-card", function (e) {
-    if ($(e.target).hasClass("btn-add-cart")) {
-      e.preventDefault();
+    if ($(e.target).hasClass("btn-add-cart")) {     
       productAdd($(e.target));
       return false;
     }
@@ -67,6 +63,7 @@ $(() => {
     function (e) {
       e.preventDefault();
       productAdd($(this));
+      return false;
     }
   );
 

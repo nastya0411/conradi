@@ -121,7 +121,7 @@ class CartController extends Controller
     }
 
 
-        public function actionClear($id)
+    public function actionClear($id)
     {
         if ($model = $this->findModel($id)) {
             $model->delete();
@@ -130,7 +130,7 @@ class CartController extends Controller
         return $this->asJson(['status' => false]);
     }
 
-        public function actionCount()
+    public function actionCount()
     {
         if ($model = Cart::findOne(['user_id' => Yii::$app->user->id])) {
             return $this->asJson([
@@ -148,70 +148,76 @@ class CartController extends Controller
     }
 
     public function actionAdd($id)
-{
-    Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
-    $product = Product::findOne($id);
-    
-    if (!$product || $product->count < 1) {
-        return $this->asJson(['status' => false, 'message' => 'Товар недоступен']);
-    }
+        $product = Product::findOne($id);
 
-    $cart = Cart::findOne(['user_id' => Yii::$app->user->id]);
-    if (!$cart) {
-        $cart = new Cart();
-        $cart->user_id = Yii::$app->user->id;
-        $cart->cost = 0;
-        $cart->amount = 0;
-        if (!$cart->save()) {
-            return $this->asJson(['status' => false, 'message' => 'Ошибка создания корзины']);
+        if (!$product || $product->count < 1) {
+            return $this->asJson(['status' => false, 'message' => 'Товар недоступен']);
         }
-    }
 
-    $cartItem = CartItem::findOne([
-        'cart_id' => $cart->id, 
-        'product_id' => $id
-    ]);
-    
-    if (!$cartItem) {
-        $cartItem = new CartItem();
-        $cartItem->cart_id = $cart->id;
-        $cartItem->product_id = $product->id;
-        $cartItem->amount = 0;
-        $cartItem->cost = $product->price; 
-        $cartItem->total = 0;
-    }
+        $cart = Cart::findOne(['user_id' => Yii::$app->user->id]);
+        if (!$cart) {
+            $cart = new Cart();
+            $cart->user_id = Yii::$app->user->id;
+            $cart->cost = 0;
+            $cart->amount = 0;
+            if (!$cart->save()) {
+                return $this->asJson(['status' => false, 'message' => 'Ошибка создания корзины']);
+            }
+        }
 
-    if ($cartItem->amount >= $product->count) {
-        return $this->asJson(['status' => false, 'message' => 'Недостаточно товара на складе']);
-    }
+        $cartItem = CartItem::findOne([
+            'cart_id' => $cart->id,
+            'product_id' => $id
+        ]);
 
-    $cartItem->amount++;
-    $cartItem->total = $cartItem->amount * $cartItem->cost; 
-    
-    if (!$cartItem->save()) {
-        return $this->asJson(['status' => false, 'message' => 'Ошибка сохранения элемента']);
-    }
+        if (!$cartItem) {
+            $cartItem = new CartItem();
+            $cartItem->cart_id = $cart->id;
+            $cartItem->product_id = $product->id;
+            $cartItem->amount = 0;
+            $cartItem->cost = $product->price;
+            $cartItem->total = 0;
+        }
 
-    $cart->amount++;
-    $cart->cost += $product->price;
-    
-    if (!$cart->save()) {
-        return $this->asJson(['status' => false, 'message' => 'Ошибка сохранения корзины']);
-    }
+        if ($cartItem->amount >= $product->count) {
+            return $this->asJson(['status' => false, 'message' => 'Недостаточно товара на складе']);
+        }
 
-    return $this->asJson([
-        'status' => true,
-        'cartTotal' => $cart->cost,
-        'itemsCount' => $cart->amount,
-        'itemCount' => $cartItem->amount,
-        'itemTotal' => $cartItem->total
-    ]);
-}
+        $cartItem->amount++;
+        $cartItem->total = $cartItem->amount * $cartItem->cost;
+
+        if (!$cartItem->save()) {
+            return $this->asJson(['status' => false, 'message' => 'Ошибка сохранения позиции в корзине']);
+        }
+
+        $cart->amount++;
+        $cart->cost += $product->price;
+
+        if (!$cart->save()) {
+            return $this->asJson(['status' => false, 'message' => 'Ошибка сохранения корзины']);
+        }
+
+        return $this->asJson([
+            'status' => true,
+            // 'cartTotal' => $cart->cost,
+            // 'itemsCount' => $cart->amount,
+            // 'itemCount' => $cartItem->amount,
+            // 'itemTotal' => $cartItem->total
+        ]);
+    }
 
     public function actionItemRemove($id)
     {
         if ($model = CartItem::findOne($id)) {
+            $cart = $model->cart;
+
+            $cart->amount -= $model->amount;
+            $cart->cost -= $model->total;
+            $cart->save();
+
             $model->delete();
             return $this->asJson(['status' => true]);
         } else {
@@ -219,34 +225,115 @@ class CartController extends Controller
         }
     }
 
+    
+
+/**
+ * This is the model class for table "cart_item".
+ *
+ * @property int $id
+ * @property float $cost
+ * @property int $amount
+ * @property float $total
+ *
+  */
+
+/**
+ * This is the model class for table "cart".
+ *
+ * @property int $id
+ * @property float $cost
+ * @property int $amount
+ */
+
+
+/**
+ * This is the model class for table "product".
+ *
+ * @property int $id
+ * @property float $price
+  * @property int $count
+  */
+
     public function actionItemAdd($id)
-{
-    Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-    
-    $cartItem = CartItem::findOne($id);
-    
-    if ($cartItem) {
-        $product = $cartItem->product;
-        
-        if ($cartItem->amount >= $product->count) {
-            return $this->asJson(['status' => false]);
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        $cartItem = CartItem::findOne($id);
+
+        if ($cartItem) {
+            $product = $cartItem->product;
+
+            if ($cartItem->amount >= $product->count) {
+                return $this->asJson(['status' => false]);
+            }
+
+            $cart = $cartItem->cart;
+
+            $cartItem->amount++;
+            $cartItem->total += $product->price;            
+            $cartItem->save();
+
+            $cart->amount++;
+            $cart->cost += $product->price;
+            $cart->save();
+
+            return $this->asJson(['status' => true]);
         }
-        
-        $cart = $cartItem->cart;
-        
-        $cartItem->amount++;
-        $cartItem->cost += $product->price;
-        $cartItem->save();
-        
-        $cart->amount++;
-        $cart->cost += $product->price;
-        $cart->save();
-        
-        return $this->asJson(['status' => true]);
+
+        return $this->asJson(['status' => false]);
     }
-    
-    return $this->asJson(['status' => false]);
-}
+
+/**
+ * This is the model class for table "cart_item".
+ *
+ * @property int $id
+ * @property float $cost
+ * @property int $amount
+ * @property float $total
+ *
+  */
+
+/**
+ * This is the model class for table "cart".
+ *
+ * @property int $id
+ * @property float $cost
+ * @property int $amount
+ */
+
+
+/**
+ * This is the model class for table "product".
+ *
+ * @property int $id
+ * @property float $price
+  * @property int $count
+  */
+    public function actionItemDel($id)
+    {
+        $cart = Cart::findOne(['user_id' => Yii::$app->user->id]);
+        $product = Product::findOne($id);
+
+        if ($cart && $product) {
+           
+            $cartItem = CartItem::findOne(['cart_id' => $cart->id, 'product_id' => $id]);
+
+            $cartItem->amount--;
+            $cartItem->total -= $product->price;
+            $cartItem->save();
+
+            if ($cartItem->amount == 0) {
+                $cartItem->delete();
+            }
+
+            $cart->amount--;
+            $cart->cost -= $product->price;
+            $cart->save();
+
+            return $this->asJson(['status' => true]);
+        }
+        return $this->asJson(['status' => false]);
+    }
 
     /**
      * Finds the Cart model based on its primary key value.

@@ -30,7 +30,7 @@ $cart = Cart::findOne(['user_id' => Yii::$app->user->id]);
         <div class="d-flex justify-content-end mb-3">
             <?= Html::a('Очистить корзину', ['clear', 'id' => $cart->id], [
                 'class' => 'btn btn-red-style btn-cart-clear',
-                'data-pjax' => "0",
+                'data-pjax' => 0,
                 'data-method' => 'post',
                 'data-confirm' => 'Вы уверены, что хотите очистить корзину?'
             ]) ?>
