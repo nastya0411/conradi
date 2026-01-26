@@ -26,12 +26,15 @@ use Yii;
 class Order extends \yii\db\ActiveRecord
 {
 
+    public $date;
+    public $time;
 
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
+
         return 'order';
     }
 
@@ -42,9 +45,9 @@ class Order extends \yii\db\ActiveRecord
     {
         return [
             [['total'], 'default', 'value' => 0.00],
-            [['user_id', 'amount', 'pay_type_id', 'address', 'status_id', 'date_time', 'created_at', 'pay_receipt'], 'required'],
+            [['user_id', 'amount', 'pay_type_id', 'address', 'status_id', 'date_time', 'date', 'time'], 'required'],
             [['user_id', 'amount', 'pay_type_id', 'status_id', 'pay_receipt'], 'integer'],
-            [['date_time', 'created_at'], 'safe'],
+            [['date_time', 'date', 'time', 'created_at'], 'safe'],
             [['total'], 'number'],
             [['address'], 'string', 'max' => 255],
             [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => Status::class, 'targetAttribute' => ['status_id' => 'id']],
@@ -59,16 +62,18 @@ class Order extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'user_id' => 'User ID',
-            'amount' => 'Amount',
-            'pay_type_id' => 'Pay Type ID',
-            'address' => 'Address',
-            'status_id' => 'Status ID',
-            'date_time' => 'Date Time',
-            'created_at' => 'Created At',
+            'id' => 'Заказ №',
+            'user_id' => 'Клиент',
+            'amount' => 'Количество товаров в заказе',
+            'pay_type_id' => 'Способ оплаты',
+            'address' => 'Адрес доставки заказа',
+            'status_id' => 'Статус заказа',
+            'date_time' => 'Дата и время получания заказа',
+            'created_at' => 'Дата и время создания заказа',
             'pay_receipt' => 'Pay Receipt',
-            'total' => 'Total',
+            'total' => 'Полная цена заказа',
+            'date' => 'Дата получания заказ',
+            'time' => 'Время получания заказ',
         ];
     }
 
@@ -112,4 +117,15 @@ class Order extends \yii\db\ActiveRecord
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
+
+    // public function afterSave($insert, $changedAttributes)
+    // {
+    //     parent::afterSave($insert, $changedAttributes);
+    //     if (Yii::$app->id !== 'basic-console') {
+    //         $this->sendMail();
+    //         if (str_contains(Status::getStatuses()[$this->status_id], "Оплачен")) {
+    //             $this->sendOfd(Yii::$app->params["userEmail"]);
+    //         }
+    //     }
+    // }
 }

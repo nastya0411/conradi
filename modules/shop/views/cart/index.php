@@ -13,7 +13,6 @@ use yii\widgets\Pjax;
 $this->title = 'Корзина';
 $this->params['breadcrumbs'][] = $this->title;
 
-// Находим корзину текущего пользователя
 $cart = Cart::findOne(['user_id' => Yii::$app->user->id]);
 ?>
 <div class="cart-index">
@@ -29,38 +28,33 @@ $cart = Cart::findOne(['user_id' => Yii::$app->user->id]);
     <?php if ($dataProvider->totalCount): ?>
         <div class="d-flex justify-content-end mb-3">
             <?= Html::a('Очистить корзину', ['clear', 'id' => $cart->id], [
-                'class' => 'btn btn-red-style btn-cart-clear',
+                'class' => 'btn btn-outline-danger btn-cart-clear',
                 'data-pjax' => 0,
                 'data-method' => 'post',
                 'data-confirm' => 'Вы уверены, что хотите очистить корзину?'
             ]) ?>
         </div>
-        
+
         <?= ListView::widget([
             'dataProvider' => $dataProvider,
             'itemOptions' => ['class' => 'item'],
             'itemView' => 'item',
             'layout' => '{items}'
         ]) ?>
-        
+
         <div class="border-white border-top border-2 py-3 order-total fw-bold fs-3">
             <div class="row align-items-center">
-                <!-- Блок с текстом -->
                 <div class="col-md-3">
                     Итого:
                 </div>
-
-                <!-- Количество товара -->
                 <div class="col-md-3 text-center">
                     <?= $cart->amount ?> шт.
                 </div>
-
-                <!-- Сумма -->
                 <div class="col-md-6 text-end">
                     <?= Yii::$app->formatter->asDecimal($cart->cost, 2) ?> ₽
                     <div class="text-end mt-3">
-                        <?= Html::a('Оформить заказ', ['order/create', 'cart_id' => $cart->id], [
-                            'class' => 'btn btn-orange-style btn-order-create'
+                        <?= Html::a('Оформить заказ', ['/account/order/create', 'cart_id' => $dataProvider->models[0]['cart_id']], [
+                            'class' => 'btn btn-outline-primary btn-order-create'
                         ]) ?>
                     </div>
                 </div>
@@ -71,7 +65,7 @@ $cart = Cart::findOne(['user_id' => Yii::$app->user->id]);
             Ваша корзина пуста!
         </div>
         <div class="text-center mt-3">
-            <?= Html::a('Перейти в каталог', ['catalog/index'], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a('Перейти в каталог', ['catalog/index'], ['class' => 'btn btn-outline-primary']) ?>
         </div>
     <?php endif ?>
 
