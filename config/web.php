@@ -9,7 +9,7 @@ $config = [
     'bootstrap' => ['log'],
     'language' => 'ru-RU',
     'name' => 'Конради',
-    'defaultRoute' => "/shop/catalog", 
+    'defaultRoute' => "/shop/catalog",
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
@@ -50,24 +50,27 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => [
-            ],
+            'rules' => [],
         ],
     ],
     'params' => $params,
 
-    'modules' => [ 
-        'shop' => [ 
+    'modules' => [
+        'shop' => [
             'class' => 'app\modules\shop\Module',
-            'defaultRoute' => "catalog" 
+            'defaultRoute' => "catalog"
         ],
-        
-        'account' => [ 
-            'class' => 'app\modules\account\Module', 
+
+        'account' => [
+            'class' => 'app\modules\account\Module',
+            'defaultRoute' => 'order/index',
+
         ],
-        
-        'admin' => [ 
-            'class' => 'app\modules\admin\Module', 
+
+        'admin' => [
+            'class' => 'app\modules\admin\Module',
+            'defaultRoute' => 'order/index',
+
         ],
 
 

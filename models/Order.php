@@ -53,6 +53,7 @@ class Order extends \yii\db\ActiveRecord
             [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => Status::class, 'targetAttribute' => ['status_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
             [['pay_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => PayType::class, 'targetAttribute' => ['pay_type_id' => 'id']],
+            ['address', 'match', 'pattern' => '/^[^,]+,[^,]+,[^,]+$/', 'message' => 'Адрес должен быть в формате: "Улица, дом, квартира"'],
         ];
     }
 
@@ -128,4 +129,6 @@ class Order extends \yii\db\ActiveRecord
     //         }
     //     }
     // }
+
+
 }

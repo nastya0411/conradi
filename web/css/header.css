@@ -1,0 +1,9 @@
+.bg-dark{
+    background-color: rgba(154, 20, 65, 1) !important;
+}
+
+ol.breadcrumb:first-child a{
+    color: rgb(133, 25, 25) !important;
+    text-decoration: none;
+}
+

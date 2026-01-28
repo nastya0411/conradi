@@ -1,0 +1,93 @@
+#main {
+  animation: main 1s ease 1;
+}
+
+@keyframes main {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.is-invalid {
+  animation: is-invalid 1s ease 1;
+}
+
+
+@keyframes is-invalid {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(20px);
+  }
+}
+
+.is-valid {
+  animation: is-valid 1s ease 1;
+}
+
+@keyframes is-valid {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(-20px);
+  }
+}
+
+.invalid-feedback {
+  animation: invalid-feedback 1s ease 1;
+}
+
+@keyframes invalid-feedback {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(-10px);
+  }
+}
+
+
+@font-face {
+  font-family: 'Montserrat-Medium';
+  src: url('/web/fonts/Montserrat-Medium.ttf');
+}
+
+* {
+  font-family: 'Montserrat-Medium';
+  letter-spacing: 1.5px !important;
+}
+
+.btn-outline-primary{
+    color:  rgba(154, 20, 65, 1) !important;
+    border-color:  rgba(154, 20, 65, 1) !important;
+}
+
+.btn-outline-primary:hover{
+    color:  rgb(235, 235, 235) !important;
+    background-color:  rgba(154, 20, 65, 1) !important;
+}
+
+.btn-outline-info{
+    color:  rgb(128, 128, 128) !important;
+    border-color:  rgba(128, 128, 128) !important;
+}
+
+.btn-outline-info:hover{
+    color:  rgb(235, 235, 235) !important;
+    background-color:  rgb(128, 128, 128) !important;
+}

@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php if ($dataProvider->totalCount): ?>
         <?= ListView::widget([
             'dataProvider' => $dataProvider,
-            'itemOptions' => ['class' => '{pager}<div">{items}</div>{pager}'],
+            'itemOptions' => ['class' => '{pager}<div class="card-style">{items}</div>{pager}'],
             'itemView' => 'item',
             'pager' => ['class' => LinkPager::class]
         ]) ?>

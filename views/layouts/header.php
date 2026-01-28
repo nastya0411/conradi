@@ -8,7 +8,11 @@ use yii\web\JqueryAsset;
 <header id="header">
     <?php
     NavBar::begin([
-        'brandLabel' => 'Конради',
+        'brandLabel' =>
+        '<div class="d-flex flex-column align-items-center">' .
+            Html::img('/img/logo.svg', ['alt' => 'Конради', 'style' => 'height: 30px; margin-bottom: 2px;']) .
+            '<span class="small">Конради</span>' .
+            '</div>',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-expand-lg navbar-dark bg-dark fixed-top',
