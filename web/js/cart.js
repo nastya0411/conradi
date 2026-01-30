@@ -48,14 +48,17 @@ $(() => {
     }
   );
 
-  $("#catalog-pjax").on("click", ".product-card", function (e) {
-    if ($(e.target).hasClass("btn-add-cart")) {     
-      productAdd($(e.target));
-      return false;
-    }
+$("#catalog-pjax").on("click", ".product-card", function (e) {
+  if ($(e.target).hasClass("btn-add-cart")) {     
+    productAdd($(e.target));
+    return false;
+  }
 
-    location.assign($(this).data("url"));
-  });
+  const url = $(this).data("url");
+  if (url) {
+    location.assign(url);
+  }
+});
 
   $("#cart-pjax").on(
     "click",

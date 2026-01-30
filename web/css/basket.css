@@ -1,0 +1,334 @@
+/* cart.css - Адаптивные стили для корзины */
+
+.cart-item {
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid #eee;
+    margin-bottom: 15px;
+}
+
+.cart-item:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+/* Стили для изображения - всегда квадратное */
+.cart-item img {
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+    width: 100%;
+    aspect-ratio: 1/1; /* Делаем квадратным */
+    object-fit: cover; /* Заполняем квадрат */
+    max-width: 120px;
+    max-height: 120px;
+}
+
+.cart-item img:hover {
+    transform: scale(1.05);
+}
+
+/* Название товара */
+.cart-item h6 a {
+    color: rgba(154, 20, 65, 1);
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.cart-item h6 a:hover {
+    color: rgba(154, 20, 65, 0.8);
+    text-decoration: underline;
+}
+
+/* Цена за штуку */
+.text-primary.fw-bold {
+    color: rgba(154, 20, 65, 1) !important;
+    font-size: 0.95rem;
+    margin-bottom: 5px;
+    display: block;
+}
+
+/* На складе */
+.text-success.small {
+    color: #272727 !important;
+    font-size: 0.85rem;
+    display: block;
+}
+
+/* Кнопки управления количеством */
+.btn-item-del,
+.btn-item-add {
+    border-radius: 8px;
+    font-weight: bold;
+    padding: 6px 0;
+    transition: all 0.2s ease;
+    width: 40px; /* Фиксированная ширина */
+    min-width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.btn-item-del {
+    color: rgba(154, 20, 65, 1);
+    border-color: rgba(154, 20, 65, 0.3);
+}
+
+.btn-item-del:hover {
+    background: rgba(154, 20, 65, 0.863);
+    border-color: rgba(154, 20, 65, 1);
+    color: white;
+}
+
+.btn-item-add {
+    color: #28a745;
+    border-color: #28a745;
+}
+
+.btn-item-add:hover {
+    background: #28a745;
+    color: white;
+}
+
+/* Количество */
+.cart-item .mx-2 {
+    font-size: 1.1rem;
+    color: rgba(154, 20, 65, 1);
+    min-width: 50px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+/* Кнопка "Удалить" - всегда под кнопками +- */
+.btn-item-remove {
+    font-size: 0.8rem;
+    padding: 8px 12px;
+    border-radius: 6px;
+    background: transparent;
+    color: #dc3545;
+    border: 1px solid #dc3545;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 10px;
+}
+
+.btn-item-remove:hover {
+    background: #dc3545;
+    color: white;
+}
+
+/* Итоговая сумма */
+.text-primary.fs-5 {
+    color: rgba(154, 20, 65, 1) !important;
+    font-weight: 700;
+    font-size: 1.3rem !important;
+}
+
+.text-muted.small {
+    font-size: 0.8rem;
+    color: #6c757d !important;
+}
+
+/* Контейнер управления */
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+
+/* Рубль - фиксированная ширина для стабильности */
+.rub-symbol {
+    display: inline-block;
+    min-width: 10px;
+}
+
+/* АДАПТИВНОСТЬ */
+
+/* Планшет (768px и меньше) */
+@media (max-width: 768px) {
+    .cart-item {
+        padding: 12px;
+    }
+
+    .cart-item h6 a {
+        font-size: 1rem;
+    }
+
+    .cart-item img {
+        max-width: 100px;
+        max-height: 100px;
+    }
+
+    /* Перестраиваем сетку */
+    .cart-item .row {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .cart-item .col-3,
+    .cart-item .col-5,
+    .cart-item .col-4 {
+        width: 100% !important;
+        flex: 100%;
+        max-width: 100%;
+    }
+
+    /* Центрируем фото */
+    .cart-item .col-3 {
+        text-align: center;
+        order: 1;
+    }
+
+    /* Текст по центру */
+    .cart-item .col-5 {
+        text-align: center;
+        order: 2;
+    }
+
+    /* Управление внизу */
+    .cart-item .col-4 {
+        order: 3;
+        padding-top: 15px;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    /* Контейнер управления */
+    .cart-item .d-flex {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .quantity-controls {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Кнопка удаления под кнопками +- */
+    .btn-item-remove {
+        margin-top: 10px;
+        width: 100%;
+        max-width: 200px;
+    }
+}
+
+/* Мобильные (576px и меньше) */
+@media (max-width: 576px) {
+    .cart-item {
+        padding: 10px;
+    }
+
+    .cart-item h6 a {
+        font-size: 0.95rem;
+    }
+
+    .cart-item img {
+        max-width: 80px;
+        max-height: 80px;
+    }
+
+    .text-primary.fs-5 {
+        font-size: 1.2rem !important;
+    }
+
+    .btn-item-del,
+    .btn-item-add {
+        width: 35px;
+        height: 35px;
+        padding: 5px 0;
+        font-size: 0.9rem;
+    }
+
+    .cart-item .mx-2 {
+        font-size: 1rem;
+        min-width: 40px;
+    }
+
+    .quantity-controls {
+        gap: 5px;
+    }
+}
+
+/* Маленькие экраны (320px и меньше) */
+@media (max-width: 320px) {
+    .cart-item {
+        padding: 8px;
+        margin-bottom: 10px;
+    }
+
+    .cart-item h6 a {
+        font-size: 0.9rem;
+    }
+
+    .cart-item img {
+        max-width: 70px;
+        max-height: 70px;
+    }
+
+    .text-primary.fs-5 {
+        font-size: 1.1rem !important;
+    }
+
+    .btn-item-del,
+    .btn-item-add {
+        width: 32px;
+        height: 32px;
+        padding: 4px 0;
+        font-size: 0.85rem;
+    }
+
+    .btn-item-remove {
+        padding: 6px 10px;
+        font-size: 0.75rem;
+    }
+
+    .cart-item .mx-2 {
+        font-size: 0.95rem;
+        min-width: 35px;
+    }
+
+    .text-primary.fw-bold {
+        font-size: 0.9rem;
+    }
+
+    .quantity-controls {
+        gap: 4px;
+    }
+
+    /* Еще более компактная версия для очень маленьких экранов */
+    .cart-item .col-5,
+    .cart-item .col-4 {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+}
+
+/* Для очень длинных названий */
+.cart-item h6 {
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+/* Убираем лишние отступы */
+.cart-item .row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.cart-item .col-3,
+.cart-item .col-5,
+.cart-item .col-4 {
+    padding-left: 8px;
+    padding-right: 8px;
+}

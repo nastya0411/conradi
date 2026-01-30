@@ -124,7 +124,6 @@ public function actionRegister()
             $user->password = Yii::$app->security->generatePasswordHash($user->password);
             
             if ($user->save()) {
-                // ПРЯМОЙ ВХОД БЕЗ ПРОВЕРКИ ПАРОЛЯ
                 $duration = 3600 * 24 * 30; // 30 дней
                 Yii::$app->user->login($user, $duration);
                 

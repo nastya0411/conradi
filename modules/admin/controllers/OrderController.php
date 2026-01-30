@@ -11,7 +11,7 @@ use yii\filters\VerbFilter;
 /**
  * OrdertController implements the CRUD actions for Order model.
  */
-class OrdertController extends Controller
+class OrderController extends Controller
 {
     /**
      * @inheritDoc

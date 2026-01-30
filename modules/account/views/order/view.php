@@ -16,9 +16,19 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="order-view">
 
     <h3><?= Html::encode($this->title) ?></h3>
-    <p>
-        <?= Html::a('Назад', ['index'], ['class' => 'btn btn-outline-info']) ?>
-    </p>
+    <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin): ?>
+        <p>
+            <?= Html::a(
+                'Назад',
+                !Yii::$app->user->isGuest
+                    ? (Yii::$app->user->identity->isAdmin
+                        ? ['/admin/order/index']
+                        : ['/account/order/index'])
+                    : ['/site/index'],
+                ['class' => 'btn btn-outline-info']
+            ) ?>
+        </p>
+    <?php endif; ?>
 
     <?= DetailView::widget([
         'model' => $model,

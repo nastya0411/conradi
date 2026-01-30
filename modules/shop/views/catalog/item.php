@@ -11,7 +11,7 @@ use yii\helpers\Url;
 $this->registerCssFile('@web/css/cart.css', ['depends' => [\yii\bootstrap5\BootstrapAsset::class]]);
 ?>
 
-<div class="card h-100 text-center product-card">
+<div class="card h-100 text-center product-card" data-url="<?= Url::to(['view', 'id' => $model->id]) ?>">
     <div class="card-img-top p-2">
         <?php if ($model->id0): ?>
             <?= Html::img('/img/' . $model->id0->image, [
@@ -96,7 +96,7 @@ $this->registerCssFile('@web/css/cart.css', ['depends' => [\yii\bootstrap5\Boots
                         <div class="row g-1">
                             <div class="col-6">
                                 <?= Html::a('Редактировать', ['update', 'id' => $model->id], [
-                                    'class' => 'btn btn-outline-warning btn-sm w-100'
+                                    'class' => 'btn btn-outline-dark'
                                 ]) ?>
                             </div>
                         </div>

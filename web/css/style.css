@@ -91,3 +91,14 @@
     color:  rgb(235, 235, 235) !important;
     background-color:  rgb(128, 128, 128) !important;
 }
+
+
+.border-bordo{
+  border: solid;
+  border-width: 1px;
+  border-color:  rgba(154, 20, 65, 1) !important;
+}
+
+.text-bordo{
+  color: rgba(154, 20, 65, 1) !important;
+}
