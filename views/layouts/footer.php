@@ -1,9 +1,13 @@
 <?php
 
 use yii\bootstrap5\Html;
+
 ?>
 
-<footer id="footer" style="position: fixed; left: 0; bottom: 40px; width: 100%; z-index: 1030;">
+<footer id="footer" class="app-footer">
+    <!-- Анимированная полоска сверху -->
+    <div class="footer-animation-bar"></div>
+
     <div class="container py-5">
         <div class="d-flex flex-wrap align-items-center justify-content-between gap-4 mb-4">
             <nav class="footer-nav d-flex flex-wrap gap-4">
@@ -14,10 +18,23 @@ use yii\bootstrap5\Html;
             <div class="footer-contacts">
                 Контакты: <br>
                 <?= Html::a('+7 928 282-82-82', 'tel:+79282828282', ['class' => 'footer-contact-link']) ?> <br>
-
+                <?= Html::mailto('info@konradi.ru', 'info@konradi.ru') ?> <br>
+                Адрес: Невский проспект, 55, Санкт-Петербург
             </div>
         </div>
 
-        <div class="footer-copyright">2026 Конради. Все права защищены</div>
+        <!-- Карта с меткой -->
+        <div class="footer-map mb-4">
+            <iframe
+                src="https://yandex.ru/map-widget/v1/?ll=30.350184%2C59.932031&pt=30.350184%2C59.932031&z=16&l=map&size=500%2C300"
+                width="100%"
+                height="200"
+                frameborder="0"
+            ></iframe>
+        </div>
+
+        <div class="footer-copyright">
+            <span class="copyright-text">2026 Конради. Все права защищены</span>
+        </div>
     </div>
 </footer>

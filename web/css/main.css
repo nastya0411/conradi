@@ -1,8 +1,11 @@
 /* home.css - Стили для главной страницы Конради */
 :root {
-    --primary-dark: rgba(154, 20, 65, 1);    /* Бордовый */
-    --primary-light: rgba(154, 20, 65, 0.8); /* Светлый бордовый */
-    --pink-light: rgba(255, 182, 193, 0.9);  /* Светлый розовый */
+    --primary-dark: rgba(154, 20, 65, 1);
+    /* Бордовый */
+    --primary-light: rgba(154, 20, 65, 0.8);
+    /* Светлый бордовый */
+    --pink-light: rgba(255, 182, 193, 0.9);
+    /* Светлый розовый */
     --black: #000000;
     --white: #ffffff;
     --gray-light: #f8f9fa;
@@ -10,21 +13,28 @@
 
 /* Герой-секция с диагональным градиентом */
 .fullscreen-hero {
-    width: 100vw; /* Ширина на весь экран */
+    width: 100vw;
+    /* Ширина на весь экран */
     height: 100vh;
-        margin-top: -20px;
-                    margin-left: -300px;
+    margin-top: -20px;
+    margin-left: -300px;
 
     min-height: 600px;
-    background: linear-gradient(
-        135deg,                      /* Диагональный градиент */
-        #ffffff 0%,                  /* Белый */
-        #fff5f8 25%,                 /* Очень светлый розовый */
-        #ffe6ee 50%,                 /* Светлый розовый */
-        #f8d4e0 75%,                 /* Пыльно-розовый */
-        #f2c2d2 100%                 /* Еще пыльно-розовый */
-    );
-        height: calc(100vh + 20px); /* Компенсирует сдвиг */
+    background: linear-gradient(135deg,
+            /* Диагональный градиент */
+            #ffffff 0%,
+            /* Белый */
+            #fff5f8 25%,
+            /* Очень светлый розовый */
+            #ffe6ee 50%,
+            /* Светлый розовый */
+            #fde3ec 75%,
+            /* Пыльно-розовый */
+            #f5cfdc 100%
+            /* Еще пыльно-розовый */
+        );
+    height: calc(100vh + 20px);
+    /* Компенсирует сдвиг */
 
     display: flex;
     align-items: center;
@@ -32,6 +42,19 @@
     position: relative;
     overflow: hidden;
 }
+
+/* @media screen and (min-width: 1870px) {
+    .fullscreen-hero > .container,
+    .fullscreen-hero > .container-fluid {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        max-width: 100% !important;
+    }
+} */
+
+
 
 /* Контейнер для летающих роз */
 .flying-roses {
@@ -93,16 +116,20 @@
         transform: translate(-100px, -100px) rotate(0deg) scale(0.8);
         opacity: 0;
     }
+
     10% {
         opacity: 0.7;
     }
+
     50% {
         transform: translate(calc(100vw - 100px), calc(50vh - 50px)) rotate(180deg) scale(1.2);
         opacity: 0.9;
     }
+
     90% {
         opacity: 0.6;
     }
+
     100% {
         transform: translate(calc(100vw + 100px), calc(100vh + 100px)) rotate(360deg) scale(0.7);
         opacity: 0;
@@ -114,16 +141,20 @@
         transform: translate(calc(100vw + 100px), -100px) rotate(0deg) scale(0.7);
         opacity: 0;
     }
+
     15% {
         opacity: 0.6;
     }
+
     60% {
         transform: translate(calc(50vw - 100px), calc(70vh - 50px)) rotate(240deg) scale(1.3);
         opacity: 0.8;
     }
+
     85% {
         opacity: 0.5;
     }
+
     100% {
         transform: translate(-100px, calc(100vh + 100px)) rotate(480deg) scale(0.6);
         opacity: 0;
@@ -135,17 +166,21 @@
         transform: translate(calc(50vw - 50px), calc(100vh + 100px)) rotate(0deg) scale(0.9);
         opacity: 0;
     }
+
     20% {
         opacity: 0.8;
     }
+
     40% {
         transform: translate(calc(30vw - 30px), calc(30vh - 30px)) rotate(120deg) scale(1.1);
         opacity: 0.9;
     }
+
     70% {
         transform: translate(calc(80vw - 80px), calc(60vh - 60px)) rotate(240deg) scale(1);
         opacity: 0.7;
     }
+
     100% {
         transform: translate(calc(100vw + 100px), -100px) rotate(360deg) scale(0.8);
         opacity: 0;
@@ -157,18 +192,22 @@
         transform: translate(-100px, calc(50vh - 50px)) rotate(0deg) scale(0.6);
         opacity: 0;
     }
+
     25% {
         transform: translate(calc(20vw - 20px), calc(20vh - 20px)) rotate(90deg) scale(1);
         opacity: 0.7;
     }
+
     50% {
         transform: translate(calc(60vw - 60px), calc(80vh - 80px)) rotate(180deg) scale(1.4);
         opacity: 0.9;
     }
+
     75% {
         transform: translate(calc(90vw - 90px), calc(40vh - 40px)) rotate(270deg) scale(1.1);
         opacity: 0.6;
     }
+
     100% {
         transform: translate(calc(100vw + 100px), calc(100vh + 100px)) rotate(360deg) scale(0.5);
         opacity: 0;
@@ -180,18 +219,22 @@
         transform: translate(calc(100vw + 100px), calc(100vh + 100px)) rotate(0deg) scale(0.7);
         opacity: 0;
     }
+
     30% {
         transform: translate(calc(70vw - 70px), calc(30vh - 30px)) rotate(180deg) scale(1.3);
         opacity: 0.8;
     }
+
     60% {
         transform: translate(calc(30vw - 30px), calc(70vh - 70px)) rotate(360deg) scale(0.9);
         opacity: 0.6;
     }
+
     90% {
         transform: translate(-100px, -100px) rotate(540deg) scale(0.5);
         opacity: 0.4;
     }
+
     100% {
         transform: translate(-100px, -100px) rotate(720deg) scale(0.5);
         opacity: 0;
@@ -278,7 +321,7 @@
     text-align: center;
     max-width: 900px;
     padding: 40px;
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.507) !important;
     border-radius: 20px;
     backdrop-filter: blur(5px);
     box-shadow: 0 20px 60px rgba(154, 20, 65, 0.15);
@@ -296,7 +339,7 @@
 
 .hero-subtitle {
     font-size: 2rem;
-    color: #555;
+    /* color: #555; */
     margin-bottom: 3rem;
     font-weight: 300;
     letter-spacing: 1px;
@@ -329,35 +372,38 @@
 
 /* Анимации появления */
 @keyframes titleAppear {
-    from { 
-        opacity: 0; 
-        transform: translateY(-50px) scale(0.8); 
+    from {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.8);
     }
-    to { 
-        opacity: 1; 
-        transform: translateY(0) scale(1); 
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
     }
 }
 
 @keyframes subtitleAppear {
-    from { 
-        opacity: 0; 
-        transform: translateY(30px); 
+    from {
+        opacity: 0;
+        transform: translateY(30px);
     }
-    to { 
-        opacity: 1; 
-        transform: translateY(0); 
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
 @keyframes btnAppear {
-    from { 
-        opacity: 0; 
-        transform: translateY(50px) scale(0.5); 
+    from {
+        opacity: 0;
+        transform: translateY(50px) scale(0.5);
     }
-    to { 
-        opacity: 1; 
-        transform: translateY(0) scale(1); 
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
     }
 }
 
@@ -372,7 +418,7 @@
     margin: 0 auto;
     border: 4px solid var(--primary-dark);
     border-radius: 20px;
-    overflow: hidden;
+    overflow: hidden; 
     box-shadow: 0 20px 50px rgba(154, 20, 65, 0.2);
     position: relative;
 }
@@ -389,7 +435,6 @@
     z-index: -1;
     pointer-events: none;
 }
-
 .carousel-item {
     height: 600px;
 }
@@ -423,21 +468,45 @@
     box-shadow: 0 0 10px rgba(154, 20, 65, 0.5);
 }
 
+
+.carousel-item img {
+    border-radius: 20px; 
+}
+
+
 /* Кнопки карусели */
 .carousel-control-prev.premium-control,
 .carousel-control-next.premium-control {
-    width: 70px;
-    height: 70px;
-    background: var(--primary-dark);
-    border-radius: 50%;
-    top: 50%;
-    transform: translateY(-50%);
-    opacity: 0.8;
-    transition: all 0.3s ease;
-    margin: 0 25px;
-    border: 3px solid var(--white);
+    width: 70px !important;
+    height: 70px !important;
+    background: var(--primary-dark) !important;
+    border-radius: 50% !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    opacity: 0.8 !important;
+    transition: all 0.3s ease !important;
+    border: 3px solid var(--white) !important;
+    position: absolute !important;
+    z-index: 10 !important;
 }
 
+.carousel-control-prev.premium-control {
+    left: -150px !important; 
+}
+
+.carousel-control-next.premium-control {
+    right: -150px !important;
+}
+
+
+.premium-carousel {
+    overflow: visible !important;
+}
+
+.carousel-section {
+    overflow: visible !important;
+    position: relative;
+}
 .carousel-control-prev.premium-control:hover,
 .carousel-control-next.premium-control:hover {
     background: var(--primary-light);
@@ -446,8 +515,13 @@
     box-shadow: 0 0 20px rgba(154, 20, 65, 0.6);
 }
 
-.carousel-control-prev.premium-control { left: 25px; }
-.carousel-control-next.premium-control { right: 25px; }
+.carousel-control-prev.premium-control {
+    left: 25px;
+}
+
+.carousel-control-next.premium-control {
+    right: 25px;
+}
 
 /* Блок "О нас" */
 .about-section {
@@ -638,11 +712,11 @@
     .hero-title {
         font-size: 4rem;
     }
-    
+
     .hero-subtitle {
         font-size: 1.6rem;
     }
-    
+
     .carousel-item {
         height: 500px;
     }
@@ -652,32 +726,32 @@
     .hero-title {
         font-size: 3rem;
     }
-    
+
     .hero-subtitle {
         font-size: 1.3rem;
     }
-    
+
     .hero-btn {
         padding: 15px 40px;
         font-size: 1.1rem;
     }
-    
+
     .carousel-item {
         height: 400px;
     }
-    
+
     .section-title,
     .reviews-title {
         font-size: 2.2rem;
     }
-    
+
     .carousel-control-prev.premium-control,
     .carousel-control-next.premium-control {
         width: 50px;
         height: 50px;
         margin: 0 15px;
     }
-    
+
     .review-avatar {
         width: 60px;
         height: 60px;
@@ -688,14 +762,92 @@
     .hero-title {
         font-size: 2.5rem;
     }
-    
+
     .carousel-item {
         height: 300px;
     }
-    
+
     .bubble-large,
     .bubble-medium,
     .bubble-small {
         display: none;
+    }
+}
+
+/* Основные стили для fullscreen-hero (вне медиазапросов) */
+.fullscreen-hero {
+    margin-right: 0;
+}
+
+
+    
+@media screen and (max-width: 1870px) { 
+    body .fullscreen-hero { background:#ffffff;
+        margin-left: -300px;
+ } 
+
+}
+
+
+    
+@media screen and (max-width: 1630px) { 
+    body .fullscreen-hero { background:#ffffff;
+        margin-left: -200px;
+ } 
+}
+
+    
+@media screen and (max-width: 1430px) { 
+    body .fullscreen-hero { background:#ffffff;
+        margin-left: -150px;
+ } 
+}
+
+
+    
+@media screen and (max-width: 1230px) { 
+    body .fullscreen-hero { background:#ffffff;
+        margin-left: -100px;
+ } 
+}
+    
+@media screen and (max-width: 750px) { 
+    body .fullscreen-hero { background:#ffffff;
+        margin-left: -50px;
+ } }
+
+
+
+    
+@media screen and (max-width: 600px) { 
+    body .fullscreen-hero { background:#ffffff;
+        margin-left: -20px;
+ } }
+
+
+
+ @media (max-width: 1295px) {
+    .carousel-control-prev.premium-control,
+    .carousel-control-next.premium-control {
+        display: none !important;
+    }
+
+    /* Теперь можно убрать overflow: visible у карусели */
+    .premium-carousel {
+        overflow: hidden; /* верни обратно, если хочешь скругление */
+    }
+}
+
+@media (max-width: 1295px) {
+    .carousel-section {
+        display: none !important;
+    }
+}
+
+
+
+@media (max-width: 768px) {
+    .reviews-section .row {
+        gap: 1rem !important; 
     }
 }

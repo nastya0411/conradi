@@ -7,3 +7,39 @@ ol.breadcrumb:first-child a{
     text-decoration: none;
 }
 
+/* Анимация подчеркивания для ВСЕХ ссылок в шапке */
+#header .navbar a {
+    position: relative;
+    display: inline-block;
+    text-decoration: none !important;
+}
+
+#header .navbar a::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 1.5px;
+    background: white;
+    border-radius: 1px;
+    transition: width 0.3s ease;
+}
+
+#header .navbar a:hover::after {
+    width: 100%;
+}
+
+/* Для логотипа отключаем анимацию */
+#header .navbar-brand::after {
+    display: none;
+}
+
+/* Для иконки корзины */
+#header .navbar a img {
+    transition: transform 0.2s ease;
+}
+
+#header .navbar a:hover img {
+    transform: scale(1.1);
+}
