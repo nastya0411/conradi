@@ -5,7 +5,6 @@ use yii\bootstrap5\Html;
 ?>
 
 <footer id="footer" class="app-footer">
-    <!-- Анимированная полоска сверху -->
     <div class="footer-animation-bar"></div>
 
     <div class="container py-5">
@@ -23,7 +22,6 @@ use yii\bootstrap5\Html;
             </div>
         </div>
 
-        <!-- Карта с меткой -->
         <div class="footer-map mb-4">
             <iframe
                 src="https://yandex.ru/map-widget/v1/?ll=30.350184%2C59.932031&pt=30.350184%2C59.932031&z=16&l=map&size=500%2C300"

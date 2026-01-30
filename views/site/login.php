@@ -12,41 +12,57 @@ $this->title = 'Авторизация';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-login">
-    <h3><?= Html::encode($this->title) ?></h3>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <h1 class="text-center mb-4"><?= Html::encode($this->title) ?></h1>
+            </div>
+            
+            <div class="col-lg-6 col-md-8 col-sm-10">
+                <div class="login-card p-4 p-lg-5">
+                    <?php $form = ActiveForm::begin([
+                        'id' => 'login-form',
+                        'fieldConfig' => [
+                            'template' => "{label}\n{input}\n{error}",
+                            'labelOptions' => ['class' => 'form-label fw-bold'],
+                            'inputOptions' => ['class' => 'form-control'],
+                            'errorOptions' => ['class' => 'invalid-feedback'],
+                        ],
+                    ]); ?>
 
+                    <div class="mb-4">
+                        <?= $form->field($model, 'login')->textInput(['autofocus' => true]) ?>
+                    </div>
 
-    <div class="row">
-        <div class="col-lg-4">
+                    <div class="mb-4">
+                        <?= $form->field($model, 'password')->passwordInput() ?>
+                    </div>
 
-            <?php $form = ActiveForm::begin([
-                'id' => 'login-form',
-                'fieldConfig' => [
-                    'template' => "{label}\n{input}\n{error}",
-                    'labelOptions' => ['class' => 'col-lg-1 col-form-label mr-lg-3'],
-                    'inputOptions' => ['class' => 'col-lg-3 form-control'],
-                    'errorOptions' => ['class' => 'col-lg-7 invalid-feedback'],
-                ],
-            ]); ?>
+                    <div class="mb-4">
+                        <?= $form->field($model, 'rememberMe')->checkbox([
+                            'template' => "<div class=\"form-check\">{input} {label}</div>\n<div>{error}</div>",
+                        ]) ?>
+                    </div>
 
-            <?= $form->field($model, 'login')->textInput(['autofocus' => true]) ?>
+                    <div class="form-group text-center mt-4">
+                        <?= Html::submitButton('Вход', ['class' => 'btn btn-primary btn-lg w-100 mb-3', 'name' => 'login-button']) ?>
+                        
+                        <?= Html::a('Еще не зарегистрированы? Регистрация', 'register', [
+                            'class' => 'd-block text-center text-decoration-none mt-3'
+                        ]) ?>
+                    </div>
 
-            <?= $form->field($model, 'password')->passwordInput() ?>
-
-            <?= $form->field($model, 'rememberMe')->checkbox([
-                'template' => "<div class=\"custom-control custom-checkbox\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
-            ]) ?>
-
-            <div class="form-group">
-                <div class="d-flex justify-content-between align-items-baseline">
-                    <?= Html::a('Еще не зарегистрированы? Регистрация', 'register', ['class' => 'd-flex align-self-baseline']) ?>
-                    <?= Html::submitButton('Вход', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                    <?php ActiveForm::end(); ?>
+                    
+                    <div class="help-text text-center mt-3 pt-4">
+                        <small>Тестовые пользователи:</small>
+                        <div class="mt-2">
+                            <code>User12 / Password12</code><br>
+                            <code>Admin12 / Adminka12</code>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <?php ActiveForm::end(); ?>
-        </div>
-        <div>
-            Пользователи: User12/Password12 Admin12/Adminka12
         </div>
     </div>
 </div>

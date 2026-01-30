@@ -12,33 +12,19 @@
 
 .product-card .product-title a {
     position: relative;
-    text-decoration: none;
-}
-
-.product-card .product-title a {
-    position: relative;
-    text-decoration: none;
+    text-decoration: none !important;
     color: inherit;
 }
 
-.product-card .product-title a::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: -3px;
-    left: 0;
-    background: linear-gradient(90deg, rgb(129, 17, 55) 60%,rgb(88, 7, 34)  100%);
-    transition: width 0.4s ease;
-    border-radius: 1px;
-}
 
+/* При наведении на карточку — убираем подчёркивание */
 .product-card:hover .product-title a::after {
-    width: 100%;
+    display: none !important;
 }
 
+/* При наведении на карточку — градиентный текст */
 .product-card:hover .product-title a {
-    background: linear-gradient(90deg,rgb(129, 17, 55)  60%, rgb(88, 7, 34) 100%);
+    background: linear-gradient(90deg, rgb(129, 17, 55) 60%, rgb(88, 7, 34) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -55,7 +41,7 @@
 }
 
 .product-card .btn-add-cart:hover {
-    transform: translateY(-2px);
+    transform: translateY(-0.5px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 

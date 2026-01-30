@@ -1,0 +1,470 @@
+/* login.css - Стили для страницы авторизации */
+
+.site-login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 200px);
+    padding: 40px 20px;
+    font-family: 'Arial', sans-serif;
+    width: 100%;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.site-login h1 {
+    font-size: 2.5rem;
+    color: rgba(154, 20, 65, 1);
+    margin-bottom: 2.5rem;
+    text-align: center;
+    letter-spacing: 1px;
+    font-weight: 700;
+}
+
+/* Карточка формы */
+.login-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 15px 50px rgba(154, 20, 65, 0.1);
+    border: 1px solid rgba(154, 20, 65, 0.1);
+    width: 100%;
+}
+
+/* Увеличиваем ширину полей ввода */
+.form-control {
+    padding: 15px 20px;
+    border: 2px solid rgba(154, 20, 65, 0.2);
+    border-radius: 12px;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
+
+.form-control:focus {
+    border-color: rgba(154, 20, 65, 1);
+    box-shadow: 0 0 0 0.3rem rgba(154, 20, 65, 0.2);
+}
+
+.form-label {
+    color: #333;
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: block;
+}
+
+/* Чекбокс */
+.form-check {
+    margin: 1.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1rem;
+}
+
+.form-check-input {
+    width: 20px;
+    height: 20px;
+    accent-color: rgba(154, 20, 65, 1);
+    margin-top: 0;
+}
+
+/* Кнопка входа */
+.btn-primary {
+    background: linear-gradient(135deg, rgba(154, 20, 65, 1), rgba(154, 20, 65, 0.9));
+    border: none;
+    padding: 18px 0px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, rgba(154, 20, 65, 0.9), rgba(154, 20, 65, 0.7));
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(154, 20, 65, 0.4);
+}
+
+/* Ссылка на регистрацию */
+.text-decoration-none {
+    color: rgba(154, 20, 65, 1);
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    padding: 10px 0;
+    font-weight: 500;
+}
+
+.text-decoration-none:hover {
+    color: rgba(154, 20, 65, 0.7);
+    text-decoration: underline !important;
+}
+
+/* Блок с тестовыми пользователями */
+.help-text {
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(255, 182, 193, 0.05);
+    border-radius: 15px;
+    font-size: 0.95rem;
+    color: #666;
+    border: 1px solid rgba(154, 20, 65, 0.1);
+    width: 100%;
+}
+
+.help-text small {
+    color: rgba(154, 20, 65, 1);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.help-text code {
+    background: rgba(154, 20, 65, 0.05);
+    padding: 5px 10px;
+    border-radius: 6px;
+    color: rgba(154, 20, 65, 0.9);
+    font-size: 0.9rem;
+    margin: 5px 0;
+    display: inline-block;
+}
+
+/* Адаптивность */
+@media (max-width: 1200px) {
+    .col-lg-6 {
+        max-width: 700px;
+    }
+}
+
+@media (max-width: 992px) {
+    .col-md-8 {
+        max-width: 600px;
+    }
+}
+
+@media (max-width: 768px) {
+    .site-login {
+        min-height: calc(100vh - 150px);
+        padding: 20px 15px;
+    }
+    
+    .site-login h1 {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+    
+    .login-card {
+        padding: 30px 25px !important;
+    }
+    
+    .btn-primary {
+        padding: 15px 20px;
+        font-size: 1.1rem;
+    }
+    
+    .form-control {
+        padding: 12px 16px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .site-login h1 {
+        font-size: 1.8rem;
+    }
+    
+    .login-card {
+        padding: 25px 20px !important;
+        border-radius: 15px;
+    }
+    
+    .form-control {
+        padding: 10px 14px;
+        font-size: 0.95rem;
+    }
+    
+    .btn-primary {
+        padding: 14px 20px;
+        font-size: 1rem;
+    }
+}
+
+.site-login .btn-primary {
+    display: inline-block !important;
+    padding: 18px 60px !important;
+    background: rgba(154, 20, 65, 1) !important;
+    color: white !important;
+    border: 3px solid rgba(154, 20, 65, 1) !important;
+    border-radius: 50px !important;
+    font-size: 1.3rem !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    transition: all 0.4s ease !important;
+    position: relative !important;
+    overflow: hidden !important;
+    box-shadow: 0 10px 30px rgba(154, 20, 65, 0.3) !important;
+    width: auto !important; 
+    margin: 0 auto !important;
+    display: block !important;
+}
+
+.site-login .btn-primary:hover {
+    background: white !important;
+    color: rgba(154, 20, 65, 1) !important;
+    box-shadow: 0 15px 40px rgba(154, 20, 65, 0.4) !important;
+}
+
+.site-login .invalid-feedback {
+    display: block !important;
+    color: #dc3545 !important;
+    font-size: 0.875rem !important;
+    margin-top: 0.25rem !important;
+}
+
+.site-login .form-control.is-invalid {
+    border-color: #dc3545 !important;
+    background-image: none !important;
+    padding-right: 12px !important;
+}
+
+.site-login .form-control.is-invalid:focus {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
+}
+
+/* register.css - Стили для страницы регистрации */
+
+.site-register {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 200px);
+    padding: 40px 20px;
+    font-family: 'Arial', sans-serif;
+    width: 100%;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.site-register h1 {
+    font-size: 2.5rem;
+    color: rgba(154, 20, 65, 1);
+    margin-bottom: 2.5rem;
+    text-align: center;
+    letter-spacing: 1px;
+    font-weight: 700;
+}
+
+/* Карточка формы */
+.register-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 15px 50px rgba(154, 20, 65, 0.1);
+    border: 1px solid rgba(154, 20, 65, 0.1);
+    width: 100%;
+}
+
+/* Поля ввода */
+.form-control {
+    padding: 15px 20px;
+    border: 2px solid rgba(154, 20, 65, 0.2);
+    border-radius: 12px;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+.form-control:focus {
+    border-color: rgba(154, 20, 65, 1);
+    box-shadow: 0 0 0 0.3rem rgba(154, 20, 65, 0.2);
+}
+
+.form-label {
+    color: #333;
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: block;
+}
+
+/* Чекбокс */
+.form-check {
+    margin: 1rem 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 0.95rem;
+}
+
+.form-check-input {
+    width: 20px;
+    height: 20px;
+    accent-color: rgba(154, 20, 65, 1);
+    margin-top: 4px;
+    flex-shrink: 0;
+}
+
+.form-check-label {
+    color: #555;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+/* Кнопка регистрации */
+.site-register .btn-primary {
+    display: inline-block !important;
+    background: rgba(154, 20, 65, 1) !important;
+    color: white !important;
+    border: 3px solid rgba(154, 20, 65, 1) !important;
+    border-radius: 50px !important;
+    font-size: 1.3rem !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    transition: all 0.4s ease !important;
+    position: relative !important;
+    overflow: hidden !important;
+    box-shadow: 0 10px 30px rgba(154, 20, 65, 0.3) !important;
+    width: 100% !important;
+    max-width: 300px !important;
+    margin: 0 auto !important;
+    display: block !important;
+}
+
+.site-register .btn-primary:hover {
+    background: white !important;
+    color: rgba(154, 20, 65, 1) !important;
+    box-shadow: 0 15px 40px rgba(154, 20, 65, 0.4) !important;
+}
+
+/* Ссылка на авторизацию */
+.text-decoration-none {
+    color: rgba(154, 20, 65, 1);
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    padding: 10px 0;
+    font-weight: 500;
+}
+
+.text-decoration-none:hover {
+    color: rgba(154, 20, 65, 0.7);
+    text-decoration: underline !important;
+}
+
+/* Специальные стили для поля даты */
+input[type="date"] {
+    font-family: inherit;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    background-color: rgba(154, 20, 65, 0.1);
+    border-radius: 4px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+    background-color: rgba(154, 20, 65, 0.2);
+}
+
+/* Обработка ошибок */
+.site-register .invalid-feedback {
+    display: block !important;
+    color: #dc3545 !important;
+    font-size: 0.875rem !important;
+    margin-top: 0.25rem !important;
+}
+
+.site-register .form-control.is-invalid {
+    border-color: #dc3545 !important;
+    background-image: none !important;
+    padding-right: 12px !important;
+}
+
+.site-register .form-control.is-invalid:focus {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
+}
+
+/* Адаптивность */
+@media (max-width: 1200px) {
+    .col-lg-6 {
+        max-width: 700px;
+    }
+}
+
+@media (max-width: 992px) {
+    .col-md-8 {
+        max-width: 600px;
+    }
+}
+
+@media (max-width: 768px) {
+    .site-register {
+        min-height: calc(100vh - 150px);
+        padding: 20px 15px;
+    }
+    
+    .site-register h1 {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+    
+    .register-card {
+        padding: 30px 25px !important;
+    }
+    
+    .btn-primary {
+        padding: 18px 40px !important;
+        font-size: 1.1rem !important;
+    }
+    
+    .form-control {
+        padding: 12px 16px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .site-register h1 {
+        font-size: 1.8rem;
+    }
+    
+    .register-card {
+        padding: 25px 20px !important;
+        border-radius: 15px;
+    }
+    
+    .form-control {
+        padding: 10px 14px;
+        font-size: 0.95rem;
+    }
+    
+    .btn-primary {
+        padding: 16px 30px !important;
+        font-size: 1rem !important;
+        max-width: 100% !important;
+    }
+    
+    .form-check-label {
+        font-size: 0.9rem;
+    }
+}
+
+/* Стили для маскированного ввода телефона */
+input[placeholder="8(999)999-99-99"]::placeholder {
+    color: rgba(0, 0, 0, 0.4);
+    font-size: 1rem;
+}

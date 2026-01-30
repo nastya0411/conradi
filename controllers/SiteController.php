@@ -107,35 +107,42 @@ class SiteController extends Controller
     }
 
 
-    public function actionRegister()
-    {
-        $model = new \app\models\RegisterForm();
-        if ($model->load(Yii::$app->request->post())) {
-
-            if ($model->validate()) {
-                $user = new User();
-                $user->load($model->attributes, '');              
-
-                $user->role_id = Role::getRoleId('user');
-                $user->auth_key = Yii::$app->security->generateRandomString();
-                $user->password = Yii::$app->security->generatePasswordHash($user->password);
-                if ($user->save()) {
-                    // var_dump('Пользователь сохранен, ID:', $user->id);
-                    // die;
-                    Yii::$app->session->setFlash('success', 'Пользователь успешно зарегестрирован!');
-                    return $this->redirect('/account');
-                } else {
-                    var_dump('Ошибки при сохранении:', $user->errors);
-                }
-            } else {
-                var_dump('Ошибки валидации:', $user->errors);
-            }
-            die();
-        }
-
-
-        return $this->render('register', [
-            'model' => $model,
-        ]);
+public function actionRegister()
+{
+    if (!Yii::$app->user->isGuest) {
+        return $this->goHome();
     }
+
+    $model = new \app\models\RegisterForm();
+    if ($model->load(Yii::$app->request->post())) {
+        if ($model->validate()) {
+            $user = new User();
+            $user->load($model->attributes, '');              
+
+            $user->role_id = Role::getRoleId('user');
+            $user->auth_key = Yii::$app->security->generateRandomString();
+            $user->password = Yii::$app->security->generatePasswordHash($user->password);
+            
+            if ($user->save()) {
+                // ПРЯМОЙ ВХОД БЕЗ ПРОВЕРКИ ПАРОЛЯ
+                $duration = 3600 * 24 * 30; // 30 дней
+                Yii::$app->user->login($user, $duration);
+                
+                Yii::$app->session->setFlash('success', 'Регистрация успешно завершена! Вы вошли в систему.');
+                return Yii::$app->user->identity->isAdmin
+                    ? $this->redirect('/admin')
+                    : $this->redirect('/account');
+            } else {
+                Yii::$app->session->setFlash('error', 'Ошибка при сохранении пользователя.');
+                Yii::error('Ошибки при сохранении: ' . print_r($user->errors, true));
+            }
+        } else {
+            Yii::$app->session->setFlash('error', 'Ошибка валидации данных.');
+        }
+    }
+
+    return $this->render('register', [
+        'model' => $model,
+    ]);
+}
 }
