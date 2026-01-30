@@ -1,43 +1,52 @@
 <?php
 
+use app\models\PayType;
+use app\models\Status;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
 /** @var app\models\Order $model */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Orders', 'url' => ['index']];
+$this->title = "Заказ №" . $model->id . ' от ' . Yii::$app->formatter->asDatetime($model->created_at, 'php:d.m.Y H:i:s');
+$this->params['breadcrumbs'][] = ['label' => 'Заказы', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="order-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+    <h3><?= Html::encode($this->title) ?></h3>
+    <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin): ?>
+        <p>
+            <?= Html::a(
+                'Назад', ['/admin'],  ['class' => 'btn btn-outline-info']
+            ) ?>
+        </p>
+    <?php endif; ?>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id',
-            'user_id',
+            [
+                'attribute' => 'created_at',
+                'value' => Yii::$app->formatter->asDatetime($model->created_at, 'php:d.m.Y H:i'),
+            ],
+
             'amount',
-            'pay_type_id',
             'address',
-            'status_id',
-            'date_time',
-            'created_at',
-            'pay_receipt',
+            [
+                'attribute' => 'date_time',
+                'value' => Yii::$app->formatter->asDatetime($model->date_time, 'php:d.m.Y H:i'),
+            ],
+            [
+                'attribute' => 'pay_type_id',
+                'value' => PayType::getPayTypes()[$model->pay_type_id],
+            ],
+            [
+                'attribute' => 'status_id',
+                'value' => Status::getStatuses()[$model->status_id],
+            ],
             'total',
         ],
     ]) ?>

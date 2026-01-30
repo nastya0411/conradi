@@ -24,11 +24,11 @@ use yii\bootstrap5\Html;
             ?>
 
 
-            <?= $model->status_id == Status::getStatusId('Создан')
+            <?= $model->status_id == Status::getStatusId('Новый')
                 ? Html::a('В сборку', ['work', 'id' => $model->id], ['class' =>
-                'btn btn-orange-last', 'data-method' => 'post', 'data-pjax' => 0])
+                'btn btn-outline-success', 'data-method' => 'post', 'data-pjax' => 0])
                 . Html::a('Отменить', ['cancel', 'id' => $model->id], ['class' =>
-                'btn btn-red', 'data-method' => 'post', 'data-pjax' => 0])
+                'btn btn-outline-danger', 'data-method' => 'post', 'data-pjax' => 0])
                 : ''
             ?>
 
@@ -52,7 +52,7 @@ use yii\bootstrap5\Html;
                 if ($model->pay_receipt) {
                     $btn = Html::a('Оплата при получении', ['paid', 'id' => $model->id], ['class' => 'btn btn-orange-last', 'data-method' => 'post', 'data-pjax' => 0]);
                 } else {
-                    $btn = Html::a('Доставлен', ['apply', 'id' => $model->id], ['class' => 'btn btn-orange-last', 'data-method' => 'post', 'data-pjax' => 0]);
+                    $btn = Html::a('Доставлен', ['apply', 'id' => $model->id], ['class' => 'btn btn-outline-warning', 'data-method' => 'post', 'data-pjax' => 0]);
                 }
             }
             echo $btn;
