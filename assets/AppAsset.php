@@ -27,10 +27,7 @@ class AppAsset extends AssetBundle
         'css/main.css',
         'css/footer.css',
         'css/login.css',
-
-
-
-
+        'css/flatpickr.min.css',
     ];
     public $js = [];
     public $depends = [

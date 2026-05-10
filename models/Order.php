@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "order".
@@ -23,9 +24,9 @@ use Yii;
  * @property Status $status
  * @property User $user
  */
-class Order extends \yii\db\ActiveRecord
+class Order extends ActiveRecord
 {
-
+    // Виртуальные поля для формы
     public $date;
     public $time;
 
@@ -34,7 +35,6 @@ class Order extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-
         return 'order';
     }
 
@@ -45,15 +45,33 @@ class Order extends \yii\db\ActiveRecord
     {
         return [
             [['total'], 'default', 'value' => 0.00],
-            [['user_id', 'amount', 'pay_type_id', 'address', 'status_id', 'date_time', 'date', 'time'], 'required'],
+            // date и time теперь required как строки
+            [['user_id', 'amount', 'pay_type_id', 'address', 'status_id', 'date', 'time'], 'required'],
+            
             [['user_id', 'amount', 'pay_type_id', 'status_id', 'pay_receipt'], 'integer'],
-            [['date_time', 'date', 'time', 'created_at'], 'safe'],
+            [['date_time', 'created_at'], 'safe'],
             [['total'], 'number'],
             [['address'], 'string', 'max' => 255],
+            
+            // date и time проверяем просто как строки, форматирование делаем в beforeSave
+            [['date', 'time'], 'string'], 
+
             [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => Status::class, 'targetAttribute' => ['status_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
             [['pay_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => PayType::class, 'targetAttribute' => ['pay_type_id' => 'id']],
-            ['address', 'match', 'pattern' => '/^[^,]+,[^,]+,[^,]+$/', 'message' => 'Адрес должен быть в формате: "Улица, дом, квартира"'],
+            
+            [
+                'address',
+                'match',
+                'pattern' => '/^[а-яёА-ЯЁa-zA-Z\s]+,\s*\d+[а-яёА-ЯЁa-zA-Z]?(?:,\s*\d+)?$/u',
+                'message' => 'Адрес должен быть в формате: "Улица, дом (номер), квартира"'
+            ],
+            
+            // Проверка времени
+            ['time', 'match', 'pattern' => '/^([01]\d|2[0-3]):[0-5]\d$/', 'message' => 'Некорректное время'],
+            
+            // Кастомная валидация даты (проверка диапазона)
+            ['date', 'validateDateRange'],
         ];
     }
 
@@ -69,19 +87,17 @@ class Order extends \yii\db\ActiveRecord
             'pay_type_id' => 'Способ оплаты',
             'address' => 'Адрес доставки заказа',
             'status_id' => 'Статус заказа',
-            'date_time' => 'Дата и время получания заказа',
+            'date_time' => 'Дата и время получения заказа',
             'created_at' => 'Дата и время создания заказа',
-            'pay_receipt' => 'Pay Receipt',
+            'pay_receipt' => 'Чек об оплате',
             'total' => 'Полная цена заказа',
-            'date' => 'Дата получания заказ',
-            'time' => 'Время получания заказ',
+            'date' => 'Дата получения заказа',
+            'time' => 'Время получения заказа',
         ];
     }
 
     /**
      * Gets query for [[OrderItems]].
-     *
-     * @return \yii\db\ActiveQuery
      */
     public function getOrderItems()
     {
@@ -90,8 +106,6 @@ class Order extends \yii\db\ActiveRecord
 
     /**
      * Gets query for [[PayType]].
-     *
-     * @return \yii\db\ActiveQuery
      */
     public function getPayType()
     {
@@ -100,8 +114,6 @@ class Order extends \yii\db\ActiveRecord
 
     /**
      * Gets query for [[Status]].
-     *
-     * @return \yii\db\ActiveQuery
      */
     public function getStatus()
     {
@@ -110,25 +122,71 @@ class Order extends \yii\db\ActiveRecord
 
     /**
      * Gets query for [[User]].
-     *
-     * @return \yii\db\ActiveQuery
      */
     public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
+    /**
+     * Конвертация даты из БД (Y-m-d) в формат для пользователя (d.m.Y)
+     */
+    public function afterFind()
+    {
+        parent::afterFind();
+        
+        // Если есть сохраненная дата в date_time, разбиваем её на date и time для формы
+        if ($this->date_time) {
+            $dt = new \DateTime($this->date_time);
+            $this->date = $dt->format('d.m.Y');
+            $this->time = $dt->format('H:i');
+        }
+    }
 
-    // public function afterSave($insert, $changedAttributes)
-    // {
-    //     parent::afterSave($insert, $changedAttributes);
-    //     if (Yii::$app->id !== 'basic-console') {
-    //         $this->sendMail();
-    //         if (str_contains(Status::getStatuses()[$this->status_id], "Оплачен")) {
-    //             $this->sendOfd(Yii::$app->params["userEmail"]);
-    //         }
-    //     }
-    // }
+    /**
+     * Конвертация даты от пользователя (d.m.Y) в формат для БД (Y-m-d H:i:s)
+     */
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            // Собираем date_time из виртуальных полей date и time
+            if ($this->date && $this->time) {
+                // Преобразуем d.m.Y в объект DateTime
+                $dt = \DateTime::createFromFormat('d.m.Y H:i', $this->date . ' ' . $this->time);
+                if ($dt) {
+                    $this->date_time = $dt->format('Y-m-d H:i:s');
+                }
+            }
+            return true;
+        }
+        return false;
+    }
 
+    /**
+     * Проверка диапазона дат
+     */
+    public function validateDateRange($attribute)
+    {
+        if (!$this->$attribute) {
+            return;
+        }
 
+        // Пробуем распарсить дату в формате d.m.Y
+        $dt = \DateTime::createFromFormat('d.m.Y', $this->$attribute);
+        
+        if (!$dt || $dt->format('d.m.Y') !== $this->$attribute) {
+            $this->addError($attribute, 'Некорректный формат даты. Используйте ДД.ММ.ГГГГ');
+            return;
+        }
+
+        $timestamp = $dt->getTimestamp();
+        $today = strtotime('today');
+        $maxDate = strtotime('+3 months');
+
+        if ($timestamp < $today) {
+            $this->addError($attribute, 'Дата не может быть раньше сегодняшнего дня');
+        } elseif ($timestamp > $maxDate) {
+            $this->addError($attribute, 'Дата не может быть позже чем через 3 месяца');
+        }
+    }
 }

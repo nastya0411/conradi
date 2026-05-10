@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="form-group text-center mt-4">
                         <?= Html::submitButton('Вход', ['class' => 'btn btn-primary btn-lg w-100 mb-3', 'name' => 'login-button']) ?>
                         
-                        <?= Html::a('Еще не зарегистрированы? Регистрация', 'register', [
+                        <?= Html::a('Еще не зарегистрированы? <br> Регистрация', 'register', [
                             'class' => 'd-block text-center text-decoration-none mt-3'
                         ]) ?>
                     </div>

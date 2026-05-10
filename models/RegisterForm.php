@@ -21,33 +21,66 @@ class RegisterForm extends Model
     public function rules()
     {
         return [
-            [['full_name', 'login', 'password', 'phone', 'birthday'], 'required'],
+            [['full_name', 'login', 'password', 'phone', 'birthday', 'rule'], 'required'],
             [['full_name', 'login', 'password', 'phone'], 'string', 'max' => 255],
-            [['password'], 'string', 'min' => 8],
-            [['login'], 'string', 'min' => 6],
 
-
-            // ФИО: кириллица + пробелы, минимум 2 пробела (Ф И О)
-            ['full_name', 'match', 'pattern' => '/^[а-яё]+\s[а-яё]+\s([а-яё\s]+)$/iu', 'message' => 'ФИО должно содержать символы кириллицы и не менее 2-ух пробелов'],
+            // ФИО: кириллица + пробелы, минимум 2 слова (Фамилия Имя [Отчество])
+            [
+                'full_name',
+                'match',
+                'pattern' => '/^[а-яёА-ЯЁ]+(\s[а-яёА-ЯЁ]+){1,}$/u',
+                'message' => 'ФИО должно содержать только буквы кириллицы и пробелы. Обязательно минимум один пробел. Не допускается несколько пробелов подряд.'
+            ],
 
             // Телефон: формат 8(XXX)XXX-XX-XX
-            ['phone', 'match', 'pattern' => '/^8\([\d]{3}\)[\d]{3}(\-[\d]{2}){2}$/', 'message' => 'Телефон должен быть в формате 8(XXX)XXX-XX-XX'],
+            [
+                'phone',
+                'match',
+                'pattern' => '/^8\(\d{3}\)\d{3}-\d{2}-\d{2}$/',
+                'message' => 'Телефон должен быть в формате 8(XXX)XXX-XX-XX'
+            ],
 
-            // Логин: латиница + цифры, минимум 6 символов, есть хотя бы одна заглавная и строчная буква + цифра
-            ['login', 'match', 'pattern' => '/^(?=.*[A-Z])(?=.*[a-z])(?=.*[\d])[a-zA-Z\d]+$/', 'message' => 'Логин должен содержать латинские буквы (верхний/нижний регистр) и цифры, минимум 6 символов'],
+            // Логин: латиница + цифры, мин 6 символов, хотя бы 1 заглавная, 1 строчная, 1 цифра
+            ['login', 'string', 'min' => 6],
+            [
+                'login',
+                'match',
+                'pattern' => '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{6,}$/',
+                'message' => 'Логин должен содержать только латинские буквы (верхний/нижний регистр) и цифры, минимум 6 символов'
+            ],
             ['login', 'unique', 'targetClass' => User::class, 'message' => 'Этот логин уже занят'],
-            ['phone', 'unique', 'targetClass' => User::class, 'message' => 'Этот телефон уже занят'],
 
-            // Пароль: аналогично логину
-            ['password', 'match', 'pattern' => '/^(?=.*[A-Z])(?=.*[a-z])(?=.*[\d])[a-zA-Z\d]+$/', 'message' => 'Пароль должен содержать латинские буквы (верхний/нижний регистр) и цифры'],
+            // Пароль: аналогично логину, мин 8 символов
+            ['password', 'string', 'min' => 8],
+            [
+                'password',
+                'match',
+                'pattern' => '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{8,}$/',
+                'message' => 'Пароль должен содержать только латинские буквы (верхний/нижний регистр) и цифры, минимум 8 символов'
+            ],
+
+            // Телефон уникален
+            ['phone', 'unique', 'targetClass' => User::class, 'message' => 'Этот телефон уже занят'],
 
             // Дата рождения
             ['birthday', 'date', 'format' => 'php:Y-m-d', 'message' => 'Дата рождения должна быть в формате ГГГГ-ММ-ДД'],
-            ['birthday', 'compare', 'compareValue' => date('Y-m-d', strtotime('-18 years')), 'operator' => '<=', 'message' => 'Вы должны быть старше 18 лет'],
+            [
+                'birthday',
+                'compare',
+                'compareValue' => date('Y-m-d', strtotime('-18 years')),
+                'operator' => '<=',
+                'type' => 'date',
+                'message' => 'Вы должны быть старше 18 лет'
+            ],
 
             // Согласие
             ['rule', 'boolean'],
-            ['rule', 'required', 'requiredValue' => 1, 'message' => 'Необходимо согласиться с обработкой персональных данных'],
+            [
+                'rule',
+                'compare',
+                'compareValue' => '1',
+                'message' => 'Необходимо согласиться с обработкой персональных данных'
+            ],
         ];
     }
 
@@ -79,7 +112,7 @@ class RegisterForm extends Model
                 Yii::debug($user->errors);
                 return false;
             }
-              return $user;
+            return $user;
         }
 
         return false;

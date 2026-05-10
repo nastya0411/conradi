@@ -13,6 +13,8 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\widgets\ActiveForm;
+use yii\web\Response;
 
 /**
  * OrdertController implements the CRUD actions for Order model.
@@ -84,27 +86,32 @@ class OrderController extends Controller
     public function actionCreate()
     {
         $model = new Order();
-        
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return \yii\widgets\ActiveForm::validate($model);
+        }
+
         if ($model->load(Yii::$app->request->post())) {
             $model->status_id = Status::getStatusId('Новый');
             $model->user_id = Yii::$app->user->id;
-            $model->date_time = $model->date . ' ' . $model->time;
             $cart = Cart::findOne(['user_id' => $model->user_id]);
-            $model->amount =  $cart->amount;
-            $model->total = $cart->cost;            
-            if ($model->save()) {
-                foreach (CartItem::find(['cart_id' => $cart->id])->all() as $cart_item) {
-                    $order_item = new OrderItem();
-                    $order_item->attributes = $cart_item->attributes;
-                    $order_item->order_id = $model->id;
-                    $order_item->save();
+            $model->amount = $cart->amount;
+            $model->total = $cart->cost;
+
+            if ($model->validate()) {
+                $model->date_time = $model->date . ' ' . $model->time;
+                if ($model->save(false)) {
+                    foreach (CartItem::find(['cart_id' => $cart->id])->all() as $cart_item) {
+                        $order_item = new OrderItem();
+                        $order_item->attributes = $cart_item->attributes;
+                        $order_item->order_id = $model->id;
+                        $order_item->save();
+                    }
+                    $cart->delete();
+                    Yii::$app->session->setFlash('success', 'Заказ оформлен!');
+                    return $this->redirect(['view', 'id' => $model->id]);
                 }
-                $cart->delete();
-                Yii::$app->session->setFlash('success', 'Заказ оформлен!');
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-            else{
-                Yii::debug($model->errors);
             }
         }
 

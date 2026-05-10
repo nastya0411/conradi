@@ -34,7 +34,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     <div class="mb-4">
                         <?= $form->field($model, 'full_name')->textInput([
-                            'autofocus' => true,
                             'placeholder' => 'Введите ФИО'
                         ]) ?>
                     </div>
@@ -50,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
 
                     <div class="mb-4">
-                        <?= $form->field($model, 'login', ['enableAjaxValidation' => true])->textInput([
+                        <?= $form->field($model, 'login')->textInput([
                             'placeholder' => 'Придумайте логин'
                         ]) ?>
                     </div>
@@ -78,13 +77,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
 
                     <div class="form-group text-center mt-4">
-                        <?= Html::submitButton('Зарегистрироваться', [
+                        <?= Html::submitButton('Регистрация', [
                             'class' => 'btn btn-primary btn-lg w-100 mb-3',
                             'name' => 'register-button'
                         ]) ?>
                         
-                        <?= Html::a('Уже есть аккаунт? Авторизация', ['site/login'], [
-                            'class' => 'd-block text-center text-decoration-none mt-3'
+                        <?= Html::a('Уже есть аккаунт? <br> Авторизация', ['site/login'], [
+                            'class' => 'd-block text-center text-decoration-none mt-3 '
                         ]) ?>
                     </div>
 
