@@ -24,15 +24,12 @@ class RegisterForm extends Model
             [['full_name', 'login', 'password', 'phone', 'birthday', 'rule'], 'required'],
             [['full_name', 'login', 'password', 'phone'], 'string', 'max' => 255],
 
-            // ФИО: кириллица + пробелы, минимум 2 слова (Фамилия Имя [Отчество])
             [
                 'full_name',
                 'match',
-                'pattern' => '/^[а-яёА-ЯЁ]+(\s[а-яёА-ЯЁ]+){1,}$/u',
-                'message' => 'ФИО должно содержать только буквы кириллицы и пробелы. Обязательно минимум один пробел. Не допускается несколько пробелов подряд.'
+                'pattern' => '/^[а-яёА-ЯЁ-]+(\s[а-яёА-ЯЁ-]+){1,}$/u',
+                'message' => 'ФИО должно содержать только буквы кириллицы, дефис и пробелы. Обязательно минимум один пробел. Не допускается несколько пробелов подряд.'
             ],
-
-            // Телефон: формат 8(XXX)XXX-XX-XX
             [
                 'phone',
                 'match',
@@ -62,16 +59,9 @@ class RegisterForm extends Model
             // Телефон уникален
             ['phone', 'unique', 'targetClass' => User::class, 'message' => 'Этот телефон уже занят'],
 
-            // Дата рождения
-            ['birthday', 'date', 'format' => 'php:Y-m-d', 'message' => 'Дата рождения должна быть в формате ГГГГ-ММ-ДД'],
-            [
-                'birthday',
-                'compare',
-                'compareValue' => date('Y-m-d', strtotime('-18 years')),
-                'operator' => '<=',
-                'type' => 'date',
-                'message' => 'Вы должны быть старше 18 лет'
-            ],
+// Дата рождения
+['birthday', 'date', 'format' => 'php:d.m.Y', 'message' => 'Дата рождения должна быть в формате ДД.ММ.ГГГГ'],
+['birthday', 'validateAge'], // кастомный валидатор
 
             // Согласие
             ['rule', 'boolean'],
@@ -117,4 +107,17 @@ class RegisterForm extends Model
 
         return false;
     }
+
+    public function validateAge($attribute)
+{
+    if (!empty($this->$attribute)) {
+        $birthday = \DateTime::createFromFormat('d.m.Y', $this->$attribute);
+        if ($birthday) {
+            $age = $birthday->diff(new \DateTime())->y;
+            if ($age < 14) {
+                $this->addError($attribute, 'Вы должны быть старше 14 лет');
+            }
+        }
+    }
+}
 }

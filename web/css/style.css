@@ -74,7 +74,7 @@
 
 .btn-outline-primary{
     color:  rgba(154, 20, 65, 1) !important;
-    border-color:  rgba(154, 20, 65, 1) !important;
+    border-color:  #9a1441 !important;
 }
 
 .btn-outline-primary:hover{
@@ -101,4 +101,105 @@
 
 .text-bordo{
   color: #9a1441 !important;
+}
+
+/* Кнопка календаря */
+.calendar-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 10px;
+    background-color: #9a1441;
+    border: 1px solid #9a1441;
+    border-left: none;
+    border-radius: 0 6px 6px 0;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-bottom: 3.5%;
+}
+
+.calendar-btn:hover {
+    background-color: #7a0f33;
+    border-color: #7a0f33;
+}
+
+.calendar-btn:active {
+    background-color: #5e0a27;
+}
+
+/* Белый календарь flatpickr */
+.flatpickr-calendar {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+.flatpickr-months {
+    background: #9a1441;
+    border-radius: 8px 8px 0 0;
+    padding: 4px 0;
+}
+
+.flatpickr-months .flatpickr-month,
+.flatpickr-current-month,
+.flatpickr-current-month .cur-month,
+.flatpickr-current-month input.cur-year {
+    background: transparent;
+    color: #ffffff;
+}
+
+.flatpickr-months .flatpickr-prev-month,
+.flatpickr-months .flatpickr-next-month {
+    color: #ffffff;
+    fill: #ffffff;
+}
+
+.flatpickr-months .flatpickr-prev-month:hover svg,
+.flatpickr-months .flatpickr-next-month:hover svg {
+    fill: #ffd0e0;
+}
+
+.flatpickr-weekdays {
+    background: #ffffff;
+}
+
+.flatpickr-weekday {
+    background: #ffffff;
+    color: #9a1441;
+    font-weight: 600;
+}
+
+.flatpickr-day {
+    color: #333333;
+    border-radius: 6px;
+}
+
+.flatpickr-day:hover {
+    background: #fce8f0;
+    border-color: #fce8f0;
+    color: #9a1441;
+}
+
+.flatpickr-day.selected,
+.flatpickr-day.selected:hover {
+    background: #9a1441;
+    border-color: #9a1441;
+    color: #ffffff;
+}
+
+.flatpickr-day.today {
+    border-color: #9a1441;
+    color: #9a1441;
+}
+
+.flatpickr-day.today:hover {
+    background: #9a1441;
+    color: #ffffff;
+}
+
+.flatpickr-day.disabled,
+.flatpickr-day.disabled:hover {
+    color: #cccccc;
 }

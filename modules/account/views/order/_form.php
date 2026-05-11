@@ -31,7 +31,7 @@ $this->registerJsFile('/js/ru.js', ['depends' => 'yii\web\YiiAsset']);
             <h5 class="mb-0">Данные для доставки</h5>
         </div>
         <div class="card-body">
-            <div class="row">
+                       <div class="row">
                 <div class="col-md-6">
                     <?= $form->field($model, 'address')->textInput([
                         'maxlength' => true,
@@ -53,15 +53,21 @@ $this->registerJsFile('/js/ru.js', ['depends' => 'yii\web\YiiAsset']);
                     ]) ?>
                 </div>
             </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-12">
-                <?= $form->field($model, 'pay_type_id')->dropDownList(
-                    PayType::getPayTypes(),
-                    ['prompt' => 'Выберите тип оплаты']
-                ) ?>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <?= $form->field($model, 'pay_type_id')->dropDownList(
+                        PayType::getPayTypes(),
+                        [
+                            'prompt' => 'Выберите тип оплаты',
+                            'class' => 'form-control'
+                        ]
+                    ) ?>
+                </div>
             </div>
         </div>
+    </div>
+</div>
     </div>
 </div>
 <?= Html::submitButton('Подтвердить заказ', [
